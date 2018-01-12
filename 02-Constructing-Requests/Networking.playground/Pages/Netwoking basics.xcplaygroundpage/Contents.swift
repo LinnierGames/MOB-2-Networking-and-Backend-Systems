@@ -51,7 +51,7 @@ let session = URLSession.shared
 // 4
 let downloadTask = session.dataTask(with: request) { (data, response, error) in
     
-    _ = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments)
+   // _ = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments)
     
     
 }
@@ -70,6 +70,59 @@ downloadTask.resume()
  Calling *resume()* on the task returned by the session kicks off the network request.
  
 */
+
+class Person : Codable {
+    
+    var name: String
+    var birthday: Date
+    var age: Int {
+        return 0
+    }
+    var ssn: String = "000-00-000"
+    
+    init(name: String, dob: Date = Date()) {
+        self.name = name
+        self.birthday = dob
+    }
+    
+    enum CodingKeys: CodingKey {
+        case name
+        case birthday
+        //dont serialize ssn
+    }
+}
+
+let person = Person(name: "erick")
+let personData = try! JSONEncoder().encode(person)
+let personJson = String(data: personData, encoding: String.Encoding.utf8)
+let aPerson = try! JSONDecoder().decode(Person.self, from: personData)
+
+class Human: NSObject, NSCoding {
+    var name: String
+    
+    init(name: String) {
+        self.name = name
+    }
+    
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(self.name, forKey: "name")
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        guard
+            let name = aDecoder.decodeObject(forKey: "name") as? String
+            else {
+                return nil
+        }
+        self.name = name
+    }
+}
+
+let human = Human(name: "Erick")
+let humanData = try! JSONSerialization.data(withJSONObject: human, options: .prettyPrinted)
+let humanJson = String(data: humanData, encoding: .utf8)!
+
+let aHuman = try! JSONSerialization.jsonObject(with: humanData, options: .allowFragments) as! Human
 
 
 //: [Next](@next)
