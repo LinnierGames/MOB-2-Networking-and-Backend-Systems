@@ -1,5 +1,6 @@
 import Foundation
 import PlaygroundSupport
+import UIKit
 
 //: [Previous](@previous)
 
@@ -28,12 +29,65 @@ request.httpMethod = "GET"
 
 let session = URLSession.shared
 
-let task = session.dataTask(with: request) { (data, response, error) in
+struct Photo : Decodable {
+    var id: Int
+    var title: String
+    var albumId: Int
+    var url: String
+    var thumbnailUrl: String
+    var image: UIImage? = nil
     
-    if let data = data {
-        let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments)
-        print(json)
+//    required convenience init?(from aDecoder: Decoder) {
+//        var container = try! aDecoder.container(keyedBy: CodingKeys.self)
+//        var nestedContainer = try! container.nested
+//        guard
+//            let idValue = try? container.decode(Int.self, forKey: .id),
+//            let titleValue = try? container.decode(String.self, forKey: .title)
+//            else {
+//                return nil
+//        }
+//
+//        let hola: String? = nil
+//        let somethingWrong = hola ?? "Hi"
+//
+//        self.id = idValue
+//    }
+    
+    enum CodingKeys: CodingKey {
+        case id
+        case title
+        case albumId
+        case url
+        case thumbnailUrl
     }
+}
+
+session.dataTask(with: URL(string: "http://httpbin.org/get?id=1&albumId=1&title=accusamus%20beatae%20ad%20facilis&url=http://placehold.it/600/92c952")!) { (data, response, error) in
+    guard
+        let result = data,
+        let json = try? JSONSerialization.jsonObject(with: result, options: JSONSerialization.ReadingOptions.allowFragments) as! [String: Any],
+        let args = try? JSONSerialization.data(withJSONObject: json["args"] as! [String: Any], options: JSONSerialization.WritingOptions.prettyPrinted),
+        let photo = try? JSONDecoder().decode(Photo.self, from: args)
+        else {
+            return
+    }
+    
+    print(photo.albumId)
+    
+}.resume()
+
+let task = session.dataTask(with: request) { (data, response, error) in
+    guard let data = data else {
+        return
+    }
+    //ASK: Why use JSONSerialization?
+    let json = try! JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any]
+    UserDefaults.standard.set(json, forKey: "aPhoto")
+    var photo = try! JSONDecoder().decode(Photo.self, from: data)
+    session.dataTask(with: URL(string: photo.url)!, completionHandler: { (data, res, err) in
+        guard let data = data else { return }
+        photo.image = UIImage(data: data)
+    }).resume()
     
 }
 
@@ -90,7 +144,8 @@ postReq.httpBody = jsonData
 session.dataTask(with: postReq) { (data, resp, err) in
     if let data = data {
         let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments)
-        print(json)
+        let stringJson = String(data: data, encoding: .utf8)
+        //print(json)
     }
 }.resume()
 

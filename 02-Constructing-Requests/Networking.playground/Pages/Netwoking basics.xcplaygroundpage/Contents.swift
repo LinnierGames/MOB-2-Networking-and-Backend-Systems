@@ -97,32 +97,18 @@ let personData = try! JSONEncoder().encode(person)
 let personJson = String(data: personData, encoding: String.Encoding.utf8)
 let aPerson = try! JSONDecoder().decode(Person.self, from: personData)
 
-class Human: NSObject, NSCoding {
+class Human: NSObject, Codable {
     var name: String
     
     init(name: String) {
         self.name = name
     }
-    
-    func encode(with aCoder: NSCoder) {
-        aCoder.encode(self.name, forKey: "name")
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        guard
-            let name = aDecoder.decodeObject(forKey: "name") as? String
-            else {
-                return nil
-        }
-        self.name = name
-    }
 }
 
 let human = Human(name: "Erick")
-let humanData = try! JSONSerialization.data(withJSONObject: human, options: .prettyPrinted)
+let humanData = try! JSONEncoder().encode(human)
 let humanJson = String(data: humanData, encoding: .utf8)!
-
-let aHuman = try! JSONSerialization.jsonObject(with: humanData, options: .allowFragments) as! Human
+let aHuman = try! JSONDecoder().decode(Human.self, from: humanData)
 
 
 //: [Next](@next)
