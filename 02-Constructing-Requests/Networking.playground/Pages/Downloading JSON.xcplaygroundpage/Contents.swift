@@ -158,6 +158,132 @@ session.dataTask(with: postReq) { (data, resp, err) in
 
 */
 
+struct GoogleShortLinker {
+    static let baseUrl = "https://www.googleapis.com/urlshortener/v1/url"
+    
+    //super secret
+    var apiKey: String
+    
+    /// Creates a url with the key=apiKey as a query string
+    var postUrl: URL {
+        var urlComponents = URLComponents(string: GoogleShortLinker.baseUrl)!
+        urlComponents.query = "key=\(apiKey)"
+        
+        return urlComponents.url!
+    }
+    
+    /**
+     Creates a get url, to search for its long url, with shortenUrl in the 'query string' of the url as
+     shortUrl=url. This call includes the apiKey as well
+     
+     - Parameter shortenUrl:   The url to search for
+     
+     - Returns: A url used to get the long url, nil if the shorten string url
+     is invalid
+     */
+    func getUrl(for shortenUrl: String) -> URL? {
+        var urlComponents = URLComponents(string: GoogleShortLinker.baseUrl)!
+        urlComponents.query = "shortUrl=\(shortenUrl)&key=\(apiKey)"
+        guard let url = urlComponents.url else {
+            return nil
+        }
+        
+        return url
+    }
+    
+    enum POSTShortLinkError: Error {
+        case InvalidURL
+        case BadRequest
+    }
+    
+    enum GETShortLinkError: Error {
+        case InvalideURL
+        case BadRequest
+        case LongURLNotFound
+    }
+    
+    /**
+     Fires a POST request to the baseUrl with the long url serialized in a json
+     object using the set apiKey
+     
+     - Parameter longUrlString:   The url to shorten
+     
+     - Parameter complition: (Result, Error) If no error is present, invalid url
+     , bad request, result will contain the deserialized json object with the
+     shorten url
+     */
+    func post(longUrlString: String, complition: @escaping (_ callBack: [String: Any]?, _ error: POSTShortLinkError?) -> ()) {
+        var request = URLRequest(url: postUrl)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        guard let longUrl = URL(string: longUrlString) else {
+            return complition(nil, .InvalidURL)
+        }
+        let jsonRequest = ["longUrl": longUrl.absoluteString]
+        let jsonData = try! JSONSerialization.data(withJSONObject: jsonRequest, options: .prettyPrinted)
+        request.httpBody = jsonData
+        
+        let session = URLSession.shared
+        session.dataTask(with: request) { (data, response, error) in
+            guard error == nil,
+                let response = data,
+                let json = try? JSONSerialization.jsonObject(with: response, options: .allowFragments) as! [String: Any]
+                else {
+                return complition(nil, .BadRequest)
+            }
+            complition(json, nil)
+            
+        }.resume()
+    }
+    
+    /**
+     Fires a GET request to the baseUrl with the shorten url in the 'query
+     string' of the url and returns a json object with its long url.
+     
+     - Parameter longUrlFrom:   The url to search for its long url
+     
+     - Parameter complition: (Result, Error) If no error is present, invalid url
+     , bad request, result will contain the deserialized json object with the
+     long url
+     */
+    func get(longUrlFrom shortenUrl: String, complition: @escaping (_ callBack: [String: Any]?, _ error: GETShortLinkError?) -> ()) {
+        //make reqeust with GET
+        guard let getUrl = getUrl(for: shortenUrl) else {
+            return complition(nil, .InvalideURL)
+        }
+        var request = URLRequest(url: getUrl)
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        //fire request
+        session.dataTask(with: request) { (data, response, error) in
+            guard error == nil,
+                let response = data,
+                let json = try? JSONSerialization.jsonObject(with: response, options: .allowFragments) as! [String: Any]
+                else {
+                    return complition(nil, .BadRequest)
+            }
+            
+            complition(json, nil)
+        }.resume()
+    }
+}
+
+let service = GoogleShortLinker(apiKey: "AIzaSyB-56-tOTd0wNhIf1Rz7VCp1tglhXOhFoU")
+service.post(longUrlString: "http://www.google.com/") { (data, err) in
+    guard err == nil else {
+        print(err!)
+        return
+    }
+    print(data!)
+}
+
+service.get(longUrlFrom: "https://goo.gl/fbsS") { (result, error) in
+    guard error == nil else {
+        print("Failed")
+        return
+    }
+    
+    print(result!)
+}
 
 /*: ##Resources
  
