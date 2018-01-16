@@ -184,11 +184,8 @@ struct GoogleShortLinker {
     func getUrl(for shortenUrl: String) -> URL? {
         var urlComponents = URLComponents(string: GoogleShortLinker.baseUrl)!
         urlComponents.query = "shortUrl=\(shortenUrl)&key=\(apiKey)"
-        guard let url = urlComponents.url else {
-            return nil
-        }
         
-        return url
+        return urlComponents.url
     }
     
     enum POSTShortLinkError: Error {

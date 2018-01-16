@@ -3,5 +3,6 @@
     <pages>
         <page name='Netwoking basics'/>
         <page name='Downloading JSON'/>
+        <page name='Pokemon API'/>
     </pages>
 </playground>
