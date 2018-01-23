@@ -225,6 +225,7 @@ struct GoogleShortLinker {
             guard error == nil,
                 let response = data,
                 let json = try? JSONSerialization.jsonObject(with: response, options: .allowFragments) as! [String: Any]
+                
                 else {
                 return complition(nil, .BadRequest)
             }

@@ -22,9 +22,12 @@ struct PokemonAPI {
             else {
                 return complition(nil, nil, .InvalidURL)
         }
+        
         let requestUrl = apiUrl.appendingPathComponent(relativeUrl.absoluteString, isDirectory: true)
+        
         var request = URLRequest(url: requestUrl)
         request.httpMethod = "GET"
+        
         let session = URLSession.shared
         session.dataTask(with: request) { (data, response, error) in
             complition(data, response, error as? PokemonAPIErrors)
@@ -45,6 +48,7 @@ struct PokemonAPI {
         urlComponents.queryItems = [
             URLQueryItem(name: "limit", value: String(numberOfPokemons))
         ]
+        
         PokemonAPI.get(apiUsing: urlComponents) { (data, response, error) in
             guard error == nil else {
                 return complition(nil,error)
