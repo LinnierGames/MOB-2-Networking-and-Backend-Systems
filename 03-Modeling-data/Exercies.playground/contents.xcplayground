@@ -3,5 +3,6 @@
     <pages>
         <page name='Anime API'/>
         <page name='Joke API'/>
+        <page name='AirBNB'/>
     </pages>
 </playground>
