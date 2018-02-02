@@ -13,6 +13,7 @@
 		E933D6962024F70400A275E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E933D6952024F70400A275E5 /* Assets.xcassets */; };
 		E933D6992024F70400A275E5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E933D6972024F70400A275E5 /* LaunchScreen.storyboard */; };
 		E933D6A12024F73200A275E5 /* ProductNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E933D6A02024F73200A275E5 /* ProductNetworkService.swift */; };
+		E933D6A32024FF6D00A275E5 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = E933D6A22024FF6D00A275E5 /* Product.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		E933D6982024F70400A275E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E933D69A2024F70400A275E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E933D6A02024F73200A275E5 /* ProductNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductNetworkService.swift; sourceTree = "<group>"; };
+		E933D6A22024FF6D00A275E5 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 				E933D6952024F70400A275E5 /* Assets.xcassets */,
 				E933D6972024F70400A275E5 /* LaunchScreen.storyboard */,
 				E933D69A2024F70400A275E5 /* Info.plist */,
+				E933D6A22024FF6D00A275E5 /* Product.swift */,
 				E933D6A02024F73200A275E5 /* ProductNetworkService.swift */,
 			);
 			path = "Product-Hunt";
@@ -140,6 +143,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E933D6912024F70400A275E5 /* ViewController.swift in Sources */,
+				E933D6A32024FF6D00A275E5 /* Product.swift in Sources */,
 				E933D68F2024F70400A275E5 /* AppDelegate.swift in Sources */,
 				E933D6A12024F73200A275E5 /* ProductNetworkService.swift in Sources */,
 			);
