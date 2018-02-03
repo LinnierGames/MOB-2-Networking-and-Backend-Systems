@@ -41,6 +41,25 @@ public struct ProductNetworkService {
     }
     
     public static func fetchProducts(for newtworkCall: ProductNetworkCalls, resultHandler: @escaping (ResultType<[Product]>) -> ()) {
+        
+        
+        
+        
+        
+        guard
+            let jsonData = try? Data(contentsOf: URL(fileReferenceLiteralResourceName: "posts.json"), options: .uncached),
+            let postsResult = try? JSONDecoder().decode(PostsResult.self, from: jsonData) else {
+                assertionFailure("Failed to decode json into swift models")
+                
+                return resultHandler(.Failed("Failed to create Product list"))
+        }
+        
+        resultHandler(.Success(postsResult.posts))
+        
+        
+        
+        
+        return //ofline mode
         var request: URLRequest
         switch newtworkCall {
         case .FetchAllProductsForToday:
