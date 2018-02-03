@@ -37,6 +37,8 @@ class TodaysProductTableViewController: UITableViewController {
         cell.labelTitle.text = product.name
         cell.labelTagline.text = product.tagline
         cell.captionVotes.text = String(product.votes)
+        cell.captionComments.text = String(product.commentCount)
+        cell.captionUser.text = product.user.username
         
         return cell
     }

@@ -20,8 +20,31 @@ public struct Product: Decodable {
     let votes: Int
     
     //TODO: comment model
+    public struct Comment: Decodable {
+        
+    }
+    //let comments: [Comment]
     
-    //TODO: user model
+    let commentCount: Int
+    
+    public struct User: Decodable {
+        let name: String
+        let username: String
+        let headline: String?
+        
+        public struct Images: Decodable {
+            let original: String
+        }
+        let profileImages: Images
+        
+        enum CodingKeys: String, CodingKey {
+            case name
+            case username
+            case headline
+            case profileImages = "image_url"
+        }
+    }
+    let user: User
     
     public struct Thumbnail: Decodable {
         let mediaType: String
@@ -41,5 +64,7 @@ public struct Product: Decodable {
         case tagline
         case votes = "votes_count"
         case thumbnail
+        case commentCount = "comments_count"
+        case user
     }
 }
