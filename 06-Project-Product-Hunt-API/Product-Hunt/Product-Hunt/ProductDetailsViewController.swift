@@ -10,17 +10,33 @@ import UIKit
 
 class ProductDetailsViewController: UIViewController {
     
-    var product: Product!
+    var product: Product?
+    
+    @IBOutlet weak var embeddedTableView: UIView!
 
     @IBOutlet weak var thumbnail: UIImageView!
-    @IBOutlet weak var labelTitle: UILabel!
     @IBOutlet weak var tagline: UITextView!
     
     // MARK: - RETURN VALUES
     
     // MARK: - VOID METHODS
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let identifier = segue.identifier {
+            switch identifier {
+            case "comments table":
+                let vc = segue.destination as! ProductCommentsTableViewController
+                vc.product = product
+            default: break
+            }
+        }
+    }
+    
     private func updateUI() {
+        guard let product = product else {
+            return assertionFailure("product was not set")
+        }
+        
         thumbnail.kf.setImage(with: product.thumbnail.imageUrl)
         title = product.name
         tagline.text = product.tagline
@@ -33,12 +49,7 @@ class ProductDetailsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        guard product != nil else {
-            return assertionFailure("product was not set")
-        }
-        
         updateUI()
-        
     }
 
 }

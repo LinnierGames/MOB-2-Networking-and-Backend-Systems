@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C26092E27F61C29ACCCAB1C0 /* Pods_Product_Hunt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D0B5A08DDF7D6834066491F /* Pods_Product_Hunt.framework */; };
 		E93203BF20295DA5008A7B79 /* ProductDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93203BE20295DA5008A7B79 /* ProductDetailsViewController.swift */; };
+		E93203C1202960EE008A7B79 /* ProductCommentsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93203C0202960EE008A7B79 /* ProductCommentsTableViewController.swift */; };
 		E933D68F2024F70400A275E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E933D68E2024F70400A275E5 /* AppDelegate.swift */; };
 		E933D6942024F70400A275E5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E933D6922024F70400A275E5 /* Main.storyboard */; };
 		E933D6962024F70400A275E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E933D6952024F70400A275E5 /* Assets.xcassets */; };
@@ -25,6 +26,7 @@
 		3D0B5A08DDF7D6834066491F /* Pods_Product_Hunt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Product_Hunt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8524F71AC4CDBF80953A8570 /* Pods-Product-Hunt.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Product-Hunt.release.xcconfig"; path = "Pods/Target Support Files/Pods-Product-Hunt/Pods-Product-Hunt.release.xcconfig"; sourceTree = "<group>"; };
 		E93203BE20295DA5008A7B79 /* ProductDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsViewController.swift; sourceTree = "<group>"; };
+		E93203C0202960EE008A7B79 /* ProductCommentsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCommentsTableViewController.swift; sourceTree = "<group>"; };
 		E933D68B2024F70400A275E5 /* Product-Hunt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Product-Hunt.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E933D68E2024F70400A275E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E933D6932024F70400A275E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 				E933D68E2024F70400A275E5 /* AppDelegate.swift */,
 				E933D6A42025034D00A275E5 /* TodaysProductTableViewController.swift */,
 				E93203BE20295DA5008A7B79 /* ProductDetailsViewController.swift */,
+				E93203C0202960EE008A7B79 /* ProductCommentsTableViewController.swift */,
 				E93203BC20295D6A008A7B79 /* Models */,
 				E933D6A6202527D100A275E5 /* CustomTableViewCell.swift */,
 				E93203BD20295D74008A7B79 /* Supporting Files */,
@@ -249,6 +252,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E93203C1202960EE008A7B79 /* ProductCommentsTableViewController.swift in Sources */,
 				E933D6A32024FF6D00A275E5 /* Product.swift in Sources */,
 				E933D6A7202527D100A275E5 /* CustomTableViewCell.swift in Sources */,
 				E933D6A52025034D00A275E5 /* TodaysProductTableViewController.swift in Sources */,

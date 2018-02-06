@@ -315,7 +315,7 @@
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sqa-Tk-O1V">
                                         <rect key="frame" x="0.0" y="138.5" width="375" height="415.5"/>
                                         <connections>
-                                            <segue destination="oTJ-wy-4cL" kind="embed" id="JEt-g3-8U8"/>
+                                            <segue destination="oTJ-wy-4cL" kind="embed" identifier="comments table" id="JEt-g3-8U8"/>
                                         </connections>
                                     </containerView>
                                 </subviews>
@@ -334,6 +334,7 @@
                         <viewLayoutGuide key="safeArea" id="8bq-t3-Lha"/>
                     </view>
                     <connections>
+                        <outlet property="embeddedTableView" destination="sqa-Tk-O1V" id="1pS-Wf-Myc"/>
                         <outlet property="tagline" destination="alB-aO-MbS" id="D31-bG-mVy"/>
                         <outlet property="thumbnail" destination="2js-XK-SMZ" id="BVF-8E-h5e"/>
                     </connections>
@@ -342,21 +343,37 @@
             </objects>
             <point key="canvasLocation" x="1621.5999999999999" y="-514.09295352323841"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Product Comments Table View Controller-->
         <scene sceneID="CXr-s5-xrP">
             <objects>
-                <tableViewController id="oTJ-wy-4cL" sceneMemberID="viewController">
+                <tableViewController id="oTJ-wy-4cL" customClass="ProductCommentsTableViewController" customModule="Product_Hunt" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="MuV-1e-hnu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="415.5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="F2z-0v-9Fh">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="70G-Su-SbN" detailTextLabel="jud-Js-T7E" style="IBUITableViewCellStyleSubtitle" id="F2z-0v-9Fh">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="F2z-0v-9Fh" id="IdW-jD-mUh">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="70G-Su-SbN">
+                                            <rect key="frame" x="16" y="5" width="33.5" height="20.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jud-Js-T7E">
+                                            <rect key="frame" x="16" y="25.5" width="44" height="14.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>

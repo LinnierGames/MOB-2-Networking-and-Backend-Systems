@@ -76,4 +76,42 @@ public struct ProductNetworkService {
             }
         }.resume()
     }
+
+    public static func fetchComments(for product: Product, resultHandler: @escaping (ResultType<[CommentsResult.Comment]>) -> ()) {
+        var components = URLComponents(url: baseUrl.appendingPathComponent("comments"), resolvingAgainstBaseURL: true)!
+        components.queryItems = [
+            URLQueryItem(name: "search[post_id]", value: String(product.id))
+        ]
+        var request = URLRequest(url: components.url!)
+        request.allHTTPHeaderFields = [
+            "Host": "api.producthunt.com",
+            "Authorization": "Bearer 40d589a0340b7659eddeca24cdfe28f43337b684fbae6ef85c9e228ebeb0b1b4",
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        ]
+        
+        session.dataTask(with: request) { (data, response, error) in
+            IfError(error) { err in
+                DispatchQueue.main.async {
+                    resultHandler(.Failed(err.localizedDescription))
+                }
+            }
+            
+            print(try! JSONSerialization.jsonObject(with: data!, options: .allowFragments))
+            
+            guard
+                let result = data,
+                let commentsResult = try? JSONDecoder().decode(CommentsResult.self, from: result) else {
+                    assertionFailure("Failed to decode json into swift models")
+                    DispatchQueue.main.async {
+                        resultHandler(.Failed("Failed to create Product list"))
+                    }
+                    
+                    return
+            }
+            DispatchQueue.main.async {
+                resultHandler(.Success(commentsResult.comments))
+            }
+            }.resume()
+    }
 }
