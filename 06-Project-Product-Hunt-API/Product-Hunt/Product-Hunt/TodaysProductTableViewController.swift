@@ -41,6 +41,20 @@ class TodaysProductTableViewController: UITableViewController {
     
     // MARK: - VOID METHODS
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let identifier = segue.identifier {
+            switch identifier {
+            case "show product details":
+                let vc = segue.destination as! ProductDetailsViewController
+                if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
+                    let product = products![indexPath.row]
+                    vc.product = product
+                }
+            default: break
+            }
+        }
+    }
+    
     // MARK: - IBACTIONS
     
     // MARK: - LIFE CYCLE
