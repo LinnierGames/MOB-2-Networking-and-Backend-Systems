@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class CustomTableViewCell: UITableViewCell {
 
@@ -18,7 +19,12 @@ class CustomTableViewCell: UITableViewCell {
     @IBOutlet weak var captionUser: UILabel!
     
     func configure(post: Product) {
-        
+        self.labelTitle.text = post.name
+        self.labelTagline.text = post.tagline
+        self.captionVotes.text = String(post.votes)
+        self.captionComments.text = String(post.commentCount)
+        self.captionUser.text = post.user.username
+        self.thumbnail.kf.setImage(with: post.thumbnail.imageUrl)
     }
     
     override func awakeFromNib() {

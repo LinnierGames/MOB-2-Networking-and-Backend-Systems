@@ -34,11 +34,7 @@ class TodaysProductTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomTableViewCell
         
         let product = products![indexPath.row]
-        cell.labelTitle.text = product.name
-        cell.labelTagline.text = product.tagline
-        cell.captionVotes.text = String(product.votes)
-        cell.captionComments.text = String(product.commentCount)
-        cell.captionUser.text = product.user.username
+        cell.configure(post: product)
         
         return cell
     }

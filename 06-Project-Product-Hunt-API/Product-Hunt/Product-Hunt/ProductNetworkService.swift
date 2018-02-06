@@ -41,25 +41,6 @@ public struct ProductNetworkService {
     }
     
     public static func fetchProducts(for newtworkCall: ProductNetworkCalls, resultHandler: @escaping (ResultType<[Product]>) -> ()) {
-        
-        
-        
-        
-        
-        guard
-            let jsonData = try? Data(contentsOf: URL(fileReferenceLiteralResourceName: "posts.json"), options: .uncached),
-            let postsResult = try? JSONDecoder().decode(PostsResult.self, from: jsonData) else {
-                assertionFailure("Failed to decode json into swift models")
-                
-                return resultHandler(.Failed("Failed to create Product list"))
-        }
-        
-        resultHandler(.Success(postsResult.posts))
-        
-        
-        
-        
-        return //ofline mode
         var request: URLRequest
         switch newtworkCall {
         case .FetchAllProductsForToday:
@@ -75,18 +56,24 @@ public struct ProductNetworkService {
         
         session.dataTask(with: request) { (data, response, error) in
             IfError(error) { err in
-                resultHandler(.Failed(err.localizedDescription))
+                DispatchQueue.main.async {
+                    resultHandler(.Failed(err.localizedDescription))
+                }
             }
             
             guard
                 let result = data,
                 let postsResult = try? JSONDecoder().decode(PostsResult.self, from: result) else {
                     assertionFailure("Failed to decode json into swift models")
+                    DispatchQueue.main.async {
+                        resultHandler(.Failed("Failed to create Product list"))
+                    }
                     
-                    return resultHandler(.Failed("Failed to create Product list"))
+                    return
             }
-            
-            resultHandler(.Success(postsResult.posts))
+            DispatchQueue.main.async {
+                resultHandler(.Success(postsResult.posts))
+            }
         }.resume()
     }
 }
