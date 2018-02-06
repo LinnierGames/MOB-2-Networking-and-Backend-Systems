@@ -97,8 +97,6 @@ public struct ProductNetworkService {
                 }
             }
             
-            print(try! JSONSerialization.jsonObject(with: data!, options: .allowFragments))
-            
             guard
                 let result = data,
                 let commentsResult = try? JSONDecoder().decode(CommentsResult.self, from: result) else {

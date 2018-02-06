@@ -12,7 +12,7 @@ import Kingfisher
 class CustomTableViewCell: UITableViewCell {
 
     @IBOutlet weak var labelTitle: UILabel!
-    @IBOutlet weak var labelTagline: UILabel!
+    @IBOutlet weak var labelSubtitle: UILabel!
     @IBOutlet weak var thumbnail: UIImageView!
     @IBOutlet weak var captionVotes: UILabel!
     @IBOutlet weak var captionComments: UILabel!
@@ -20,7 +20,7 @@ class CustomTableViewCell: UITableViewCell {
     
     func configure(post: Product) {
         self.labelTitle.text = post.name
-        self.labelTagline.text = post.tagline
+        self.labelSubtitle.text = post.tagline
         self.captionVotes.text = String(post.votes)
         self.captionComments.text = String(post.commentCount)
         self.captionUser.text = post.user.username

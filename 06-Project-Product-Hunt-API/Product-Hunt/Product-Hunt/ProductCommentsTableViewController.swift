@@ -32,12 +32,16 @@ class ProductCommentsTableViewController: UITableViewController {
         return 1
     }
     
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Comments"
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return comments?.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomTableViewCell
         guard let comments = comments else {
             assertionFailure("no comments were found")
             
@@ -45,8 +49,8 @@ class ProductCommentsTableViewController: UITableViewController {
         }
         
         let comment = comments[indexPath.row]
-        cell.textLabel?.text = comment.user.username
-        cell.detailTextLabel?.text = comment.body
+        cell.labelTitle.text = comment.user.username
+        cell.labelSubtitle.text = comment.body
         
         return cell
     }
@@ -56,5 +60,12 @@ class ProductCommentsTableViewController: UITableViewController {
     // MARK: - IBACTIONS
     
     // MARK: - LIFE CYCLE
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 38
+    }
 
 }
