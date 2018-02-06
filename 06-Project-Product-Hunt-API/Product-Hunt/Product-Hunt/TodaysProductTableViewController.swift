@@ -69,7 +69,7 @@ class TodaysProductTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        ProductNetworkService.fetchProducts(for: .FetchAllProductsForToday) { (result) in
+        ProductNetworkService.fetchProducts { (result) in
             switch result {
             case .Success(let products):
                 self.products = products
