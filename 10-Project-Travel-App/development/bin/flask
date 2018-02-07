@@ -1,0 +1,11 @@
+#!/Users/ericksanc/MakeSchool/Mobile-2/MOB-2-Networking-and-Backend-Systems/10-Project-Travel-App/development/bin/python
+
+# -*- coding: utf-8 -*-
+import re
+import sys
+
+from flask.cli import main
+
+if __name__ == '__main__':
+    sys.argv[0] = re.sub(r'(-script\.pyw?|\.exe)?$', '', sys.argv[0])
+    sys.exit(main())
