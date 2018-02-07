@@ -3,6 +3,7 @@ from flask_restful import Resource, Api
 from pymongo import MongoClient
 from utils.mongo_json_encoder import JSONEncoder
 from bson.objectid import ObjectId
+import json
 import bcrypt
 
 
@@ -15,13 +16,25 @@ api = Api(app)
 
 ## Write Resources here
 
-
+users = [
+    {
+        "username": "ErickES7",
+        "name": "Erick Sanchez",
+        "email": "e@d.com",
+    },
+    {
+        "username": "SilvaEmrik",
+        "name": "Joshua Sanchez",
+        "email": "j@d.com",
+    }
+]
 
 ## Add api routes here
 
-@app.route('/')
-def hello_world():
-    return 'Hello, World!'
+@app.route('/users', methods=['GET'])
+def fetch_all_users():
+
+    return (json.dumps(users),200, {"Content-Type": "application/json"})
 
 #  Custom JSON serializer for flask_restful
 @api.representation('application/json')
