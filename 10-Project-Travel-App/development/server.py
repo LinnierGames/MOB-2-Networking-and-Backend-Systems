@@ -1,9 +1,9 @@
-from flask import Flask, request, make_response
+from flask import Flask, request, make_response, url_for, redirect, abort, render_template, jsonify
+import pdb
 from flask_restful import Resource, Api
 from pymongo import MongoClient
 from utils.mongo_json_encoder import JSONEncoder
 from bson.objectid import ObjectId
-import json
 import bcrypt
 
 
@@ -16,25 +16,51 @@ api = Api(app)
 
 ## Write Resources here
 
-users = [
+list_users = [
     {
         "username": "ErickES7",
         "name": "Erick Sanchez",
-        "email": "e@d.com",
+        "email": "e@d.com"
     },
     {
         "username": "SilvaEmrik",
         "name": "Joshua Sanchez",
-        "email": "j@d.com",
+        "email": "j@d.com"
     }
 ]
 
 ## Add api routes here
 
-@app.route('/users', methods=['GET'])
-def fetch_all_users():
+@app.route('/')
+def home():
+    return (jsonify(message="index route not supported"))
 
-    return (json.dumps(users),200, {"Content-Type": "application/json"})
+@app.route('/register', methods=['POST'])
+def register():
+    try:
+        username = request.form["username"]
+        email = request.form["email"]
+        name = request.form["name"]
+    except KeyError:
+        return (jsonify(message="Cannot have any missing fields"), 403, None)
+
+    list_users.append({username: username, email: email, name: name})
+
+    return (jsonify(message="Successfully registered {}".format(username)), 201, None)
+
+@app.route('/users')
+def users():
+    return (jsonify(list_users),200, {"Content-Type": "application/json"})
+
+@app.route('/users/<string:username>')
+def profile(username):
+    user = next(x for x in list_users if lambda item: item["username"] == username)
+
+    return (jsonify(user),200, {"Content-Type": "application/json"})
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return (render_template('page_not_found.html', error=error), 404, None)
 
 #  Custom JSON serializer for flask_restful
 @api.representation('application/json')
