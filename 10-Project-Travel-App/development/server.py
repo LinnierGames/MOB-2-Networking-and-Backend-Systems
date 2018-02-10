@@ -16,7 +16,6 @@ app.db = mongo.trip_planner_development
 app.bcrypt_rounds = 12
 api = Api(app)
 
-
 ## Write Resources here
 
 list_users = [
@@ -83,7 +82,7 @@ def profile(username):
 
     return (jsonify(user),200, {"Content-Type": "application/json"})
 
-@app.route('/users/<string:username>/delete', methods=['DELETE'])
+@app.route('/users/<string:username>', methods=['DELETE'])
 def delete_profile(username):
     auth_token = None
     try:
