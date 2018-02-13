@@ -2,13 +2,10 @@ from flask import Flask, request, make_response, url_for, redirect, abort, rende
 import pdb
 from flask_restful import Resource, Api
 import hashlib
-import uuid
-uuid.uuid4()
 from pymongo import MongoClient
 from utils.mongo_json_encoder import JSONEncoder
 from bson.objectid import ObjectId
 import bcrypt
-
 
 app = Flask(__name__)
 mongo = MongoClient('localhost', 27017)
@@ -18,26 +15,14 @@ api = Api(app)
 
 ## Write Resources here
 
-list_users = [
-    {
-        "username": "ErickES7",
-        "name": "Erick Sanchez",
-        "email": "e@d.com"
-    },
-    {
-        "username": "SilvaEmrik",
-        "name": "Joshua Sanchez",
-        "email": "j@d.com"
-    }
-]
-
 token_table = []
 
 ## Add api routes here
 
 @app.route('/')
 def home():
-    return (jsonify(message="index route not supported"))
+    return jsonify(message="index route not supported")
+
 
 @app.route('/register', methods=['POST'])
 def register():
@@ -46,41 +31,55 @@ def register():
         email = request.form["email"]
         name = request.form["name"]
     except KeyError:
-        return (jsonify(message="Cannot have any missing fields"), 400, None)
+        return jsonify(message="Cannot have any missing fields"), 400, None
+
     new_user = {
         "username": username,
         "email": email,
         "name": name
     }
 
-    if new_user in list_users:
-        return (jsonify(message="User already exists"), 403, None)
+    users_collection = app.db.users
 
-    list_users.append(new_user)
+    if users_collection.find_one({"email": email}) is not None:
+        return jsonify(message="Email already exists"), 403, None
+    elif users_collection.find_one({"username": username}) is not None:
+        return jsonify(message="Username already exists"), 403, None
 
-    token = (username).encode('hex')
-    token_table.append({
+    users_collection.insert_one(new_user)
+
+    token = username.encode('hex')
+    app.db.tokens.insert_one({
         "token": token,
         "username": username
     })
 
-    return (jsonify(message="Successfully registered {}".format(username), auth_token=token), 201, None)
+    return jsonify(message="Successfully registered {}".format(username), auth_token=token), 201, None
+
 
 @app.route('/users')
 def users():
-    return (jsonify(list_users),200, {"Content-Type": "application/json"})
+    users_collection = list(app.db.users.find())
+    data = JSONEncoder().encode(users_collection)
+
+    return data, 200, {"Content-Type": "application/json"}
+
 
 @app.route('/users/<string:username>')
 def profile(username):
-    user = None
-    for a_user in list_users:
-        if a_user["username"] == username:
-            user = a_user
+    user = app.db.users.find({"username": username})
 
-    if user == None:
+    if user is None:
         return page_not_found(error="user not found")
+    else:
+        for doc in user:
+            found_user = {
+                'username': doc["username"],
+                'name': doc["name"]
+            }
 
-    return (jsonify(user),200, {"Content-Type": "application/json"})
+            return jsonify(found_user), 200, {"Content-Type": "application/json"}
+
 
 @app.route('/users/<string:username>', methods=['DELETE'])
 def delete_profile(username):
@@ -93,29 +92,30 @@ def delete_profile(username):
     try:
         decoded_username = auth_token.decode('hex')
     except KeyError:
-        return bad_request(error="Naw")
+        return bad_request(error="naw")
 
     if decoded_username == username:
-        isDeleted = False
-        for index, a_user in enumerate(list_users):
-            if a_user["username"] == username:
-                del list_users[index]
-                isDeleted = True
+        is_found = app.db.users.find_one({'username': username})
 
-        if isDeleted:
-            return (jsonify(message="{} was deleted".format(username)), 202, None)
+        if is_found is not None:
+            app.db.tokens.delete_one({"username": username})
+            app.db.users.delete_one({"username": username})
+
+            return jsonify(message="{} was deleted".format(username)), 202, None
         else:
             return bad_request(error="{} was not found".format(username))
     else:
-        return (jsonify(message="Unauthorized request"), 401, None)
+        return jsonify(message="Unauthorized request"), 401, None
+
 
 @app.errorhandler(404)
 def page_not_found(error):
-    return (render_template('page_not_found.html', error=error), 404, None)
+    return render_template('page_not_found.html', error=error), 404, None
+
 
 @app.errorhandler(400)
 def bad_request(error):
-    return (render_template('page_not_found.html', error=error), 400, None)
+    return render_template('page_not_found.html', error=error), 400, None
 
 
 #  Custom JSON serializer for flask_restful
