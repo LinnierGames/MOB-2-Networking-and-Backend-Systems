@@ -59,18 +59,29 @@ struct LoginViewModel {
         let user = UserHTTPBody(username: nil, email: email.value!, password: password.value!)
         apiProvider.request(.Login(user)) { (result) in
             switch result {
-            case .success(let response):
-                switch response.statusCode {
-                //Todo: imnplement login in api
-                case 200:
+            case .success(let res):
+                switch res.statusCode {
+                case 202:
+                    guard
+                        let token = JSON(res.data).dictionary?["auth_token"]?.string
+                        else {
+                            return assertionFailure("missing auth_token")
+                    }
+                    
+                    PersistenceStack.loggedInUserToken = token
+                    
                     self.delegate.loginModel(self, loginWasSuccessful: true, message: "success")
+                case 401: //wrong login
+                    self.delegate.loginModel(self, loginWasSuccessful: false, message: "wrong email/password")
                 case 404: //Not found
                     self.delegate.loginModel(self, loginWasSuccessful: false, message: "email not found")
+                case 500: //internal error
+                    self.delegate.loginModel(self, registerWasSuccessful: false, message: "internal server error has occured")
                 default:
                     break
                 }
             case .failure(let error):
-                print(error.localizedDescription)
+                self.delegate.loginModel(self, registerWasSuccessful: false, message: error.localizedDescription)
             }
         }
     }
@@ -83,16 +94,7 @@ struct LoginViewModel {
             switch result {
             case .success(let res):
                 switch res.statusCode {
-                //Todo: imnplement login in api
                 case 201:
-                    guard
-                        let token = JSON(res.data).dictionary?["auth_token"]?.string
-                        else {
-                            return assertionFailure("missing auth_token")
-                    }
-                    
-                    PersistenceStack.loggedInUserToken = token
-                    
                     self.delegate.loginModel(self, loginWasSuccessful: true, message: "success")
                 case 400: //missing fields
                     self.delegate.loginModel(self, loginWasSuccessful: false, message: "cannot have missing fields")
@@ -104,11 +106,13 @@ struct LoginViewModel {
                     }
                     
                     self.delegate.loginModel(self, registerWasSuccessful: false, message: ununiqueFieldMessage)
+                case 500: //internal error
+                    self.delegate.loginModel(self, registerWasSuccessful: false, message: "internal server error has occured")
                 default:
                     assertionFailure("unhandled status code")
                 }
-            case .failure:
-                break
+            case .failure(let error):
+                self.delegate.loginModel(self, registerWasSuccessful: false, message: error.localizedDescription)
             }
         }
     }

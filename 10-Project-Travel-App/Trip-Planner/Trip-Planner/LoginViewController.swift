@@ -53,7 +53,7 @@ class LoginViewController: UIViewController, LoginViewModelDelegate {
     
     @IBOutlet weak var buttonLogin: UIButton?
     @IBAction func pressLogin(_ sender: Any) {
-        
+        loginViewModel.login()
     }
     
     @IBOutlet weak var buttonRegister: UIButton?
@@ -75,7 +75,7 @@ class LoginViewController: UIViewController, LoginViewModelDelegate {
         textfieldPassword.rx.text.bind(to: loginViewModel.password).disposed(by: loginViewModel.bag)
         
         if buttonLogin != nil {
-            buttonLogin!.rx.tap.asDriver().drive(onNext: loginViewModel.login).disposed(by: loginViewModel.bag)
+//            buttonLogin!.rx.tap.asDriver().drive(onNext: loginViewModel.login).disposed(by: loginViewModel.bag)
         } else if buttonRegister != nil {
             loginViewModel.isValid().asObservable().bind(to: buttonRegister!.rx.isEnabled).disposed(by: loginViewModel.bag)
 //            buttonRegister!.rx.tap.asDriver().drive(onNext: loginViewModel.register).disposed(by: loginViewModel.bag)

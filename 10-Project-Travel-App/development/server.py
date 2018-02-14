@@ -17,27 +17,53 @@ api = Api(app)
 
 token_table = []
 
-## Add api routes here
+# Add api routes here
+
 
 @app.route('/')
 def home():
     return jsonify(message="index route not supported")
 
 
+@app.route('/auth/login', methods=['POST'])
+def login():
+    try:
+        email = request.json["email"]
+        password = request.json["password"]
+    except KeyError:
+        return jsonify(message="Cannot have any missing fields"), 400, None
+
+    user = app.db.users.find_one({"email": email}, {"username": 1, "password": 1})
+
+    if user is not None:
+        if password == user["password"]:
+            username = user["username"]
+            token = username.encode('hex')
+            app.db.tokens.insert_one({
+                "token": token,
+                "username": username
+            })
+
+            return jsonify(message="Successfully logged in {}".format(username), auth_token=token), 202, None
+        else:
+            return jsonify(message="Wrong email/password"), 401, None
+    else:
+        return jsonify(message="Email not found"), 404, None
+
+
 @app.route('/register', methods=['POST'])
 def register():
     try:
-        pdb.set_trace()
-        username = request.form["username"]
-        email = request.form["email"]
-        name = request.form["name"]
+        username = request.json["username"]
+        email = request.json["email"]
+        password = request.json["password"]
     except KeyError:
         return jsonify(message="Cannot have any missing fields"), 400, None
 
     new_user = {
         "username": username,
         "email": email,
-        "name": name
+        "password": password
     }
 
     users_collection = app.db.users
@@ -49,13 +75,7 @@ def register():
 
     users_collection.insert_one(new_user)
 
-    token = username.encode('hex')
-    app.db.tokens.insert_one({
-        "token": token,
-        "username": username
-    })
-
-    return jsonify(message="Successfully registered {}".format(username), auth_token=token), 201, None
+    return jsonify(message="Successfully registered {}".format(username)), 201, None
 
 
 @app.route('/users')
