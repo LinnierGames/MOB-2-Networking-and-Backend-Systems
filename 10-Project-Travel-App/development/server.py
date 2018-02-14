@@ -27,6 +27,7 @@ def home():
 @app.route('/register', methods=['POST'])
 def register():
     try:
+        pdb.set_trace()
         username = request.form["username"]
         email = request.form["email"]
         name = request.form["name"]

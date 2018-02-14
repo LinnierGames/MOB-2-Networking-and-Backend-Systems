@@ -12,10 +12,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Login View Controller-->
         <scene sceneID="6Xg-X9-Hqh">
             <objects>
-                <viewController id="R2Q-uS-tYx" sceneMemberID="viewController">
+                <viewController id="R2Q-uS-tYx" customClass="LoginViewController" customModule="Trip_Planner" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="IcP-03-dOH">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -56,6 +56,9 @@
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Login"/>
+                                        <connections>
+                                            <action selector="pressLogin:" destination="R2Q-uS-tYx" eventType="touchUpInside" id="hXA-G0-AXw"/>
+                                        </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="hvg-0c-t7S">
                                         <rect key="frame" x="44" y="155" width="191.5" height="30"/>
@@ -101,15 +104,22 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="WcA-Ig-hZd"/>
                     </view>
+                    <connections>
+                        <outlet property="buttonLogin" destination="mTa-gx-5gk" id="Jc6-z2-9h8"/>
+                        <outlet property="labelEmail" destination="2la-dO-FJX" id="pPb-p9-QBY"/>
+                        <outlet property="labelPassword" destination="GgJ-Iy-DCE" id="d46-RX-XTD"/>
+                        <outlet property="textfieldEmail" destination="70i-3J-2Mj" id="yHN-H9-5UE"/>
+                        <outlet property="textfieldPassword" destination="EbW-6D-PEL" id="7bZ-cs-tBx"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Agl-ak-hYd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1278" y="-215"/>
         </scene>
-        <!--View Controller-->
+        <!--Login View Controller-->
         <scene sceneID="qn9-FR-RcR">
             <objects>
-                <viewController id="Fmw-E7-A4L" sceneMemberID="viewController">
+                <viewController id="Fmw-E7-A4L" customClass="LoginViewController" customModule="Trip_Planner" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="yGc-Bf-TwV">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -162,6 +172,9 @@
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Register"/>
+                                        <connections>
+                                            <action selector="pressRegister:" destination="Fmw-E7-A4L" eventType="touchUpInside" id="3Po-hi-wDb"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By registering you are agreeing to nothing, for now." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eTR-fw-6F2">
                                         <rect key="frame" x="0.0" y="213.5" width="279" height="20.5"/>
@@ -186,6 +199,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mSL-wc-HrS">
                                 <rect key="frame" x="16" y="20" width="38" height="30"/>
                                 <state key="normal" title="Login"/>
+                                <connections>
+                                    <action selector="pressBackToLogin:" destination="Fmw-E7-A4L" eventType="touchUpInside" id="lxU-H3-aB7"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -198,6 +214,12 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="MYh-au-JBJ"/>
                     </view>
+                    <connections>
+                        <outlet property="buttonRegister" destination="FTa-0d-lZy" id="gst-Xd-82s"/>
+                        <outlet property="textfieldEmail" destination="oDS-1e-Ukq" id="bo2-NS-iaC"/>
+                        <outlet property="textfieldPassword" destination="Pjv-qI-Cc4" id="MLv-61-m4s"/>
+                        <outlet property="textfieldUsername" destination="TJs-a8-32r" id="HJF-bM-ctP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DXD-fc-7ta" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

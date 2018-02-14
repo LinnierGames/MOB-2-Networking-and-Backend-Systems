@@ -10,12 +10,15 @@
 		A66541F31D4B87025B45568C /* Pods_Trip_Planner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 511E6935C9E7B8B96EEA9D4B /* Pods_Trip_Planner.framework */; };
 		C491133D21BBCBE0B0E4C6FA /* Pods_Trip_PlannerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36293B72A4B1AD2C3E7A5265 /* Pods_Trip_PlannerTests.framework */; };
 		E91C6A962033E2180031F701 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91C6A952033E2180031F701 /* AppDelegate.swift */; };
-		E91C6A982033E2180031F701 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91C6A972033E2180031F701 /* FirstViewController.swift */; };
-		E91C6A9A2033E2180031F701 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91C6A992033E2180031F701 /* SecondViewController.swift */; };
 		E91C6A9D2033E2180031F701 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E91C6A9B2033E2180031F701 /* Main.storyboard */; };
 		E91C6A9F2033E2180031F701 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E91C6A9E2033E2180031F701 /* Assets.xcassets */; };
 		E91C6AA22033E2180031F701 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E91C6AA02033E2180031F701 /* LaunchScreen.storyboard */; };
 		E91C6AAD2033E2180031F701 /* Trip_PlannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91C6AAC2033E2180031F701 /* Trip_PlannerTests.swift */; };
+		E91C6AB92033E3C10031F701 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E91C6AB82033E3C10031F701 /* Login.storyboard */; };
+		E91C6ABD2033E9980031F701 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91C6ABC2033E9980031F701 /* LoginViewController.swift */; };
+		E91C6ABF2033E9A70031F701 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91C6ABE2033E9A70031F701 /* LoginViewModel.swift */; };
+		E91C6AC12033E9DD0031F701 /* LoginViewModel+Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91C6AC02033E9DD0031F701 /* LoginViewModel+Moya.swift */; };
+		E91C6AC32033FDB60031F701 /* PersistanceStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91C6AC22033FDB60031F701 /* PersistanceStack.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,8 +40,6 @@
 		A79B6F57BDA1B12273B2C591 /* Pods-Trip-Planner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trip-Planner.release.xcconfig"; path = "Pods/Target Support Files/Pods-Trip-Planner/Pods-Trip-Planner.release.xcconfig"; sourceTree = "<group>"; };
 		E91C6A922033E2180031F701 /* Trip-Planner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Trip-Planner.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E91C6A952033E2180031F701 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E91C6A972033E2180031F701 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		E91C6A992033E2180031F701 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		E91C6A9C2033E2180031F701 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E91C6A9E2033E2180031F701 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E91C6AA12033E2180031F701 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -46,6 +47,11 @@
 		E91C6AA82033E2180031F701 /* Trip-PlannerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Trip-PlannerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E91C6AAC2033E2180031F701 /* Trip_PlannerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip_PlannerTests.swift; sourceTree = "<group>"; };
 		E91C6AAE2033E2180031F701 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E91C6AB82033E3C10031F701 /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
+		E91C6ABC2033E9980031F701 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		E91C6ABE2033E9A70031F701 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		E91C6AC02033E9DD0031F701 /* LoginViewModel+Moya.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginViewModel+Moya.swift"; sourceTree = "<group>"; };
+		E91C6AC22033FDB60031F701 /* PersistanceStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistanceStack.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,12 +107,10 @@
 			isa = PBXGroup;
 			children = (
 				E91C6A952033E2180031F701 /* AppDelegate.swift */,
-				E91C6A972033E2180031F701 /* FirstViewController.swift */,
-				E91C6A992033E2180031F701 /* SecondViewController.swift */,
 				E91C6A9B2033E2180031F701 /* Main.storyboard */,
-				E91C6A9E2033E2180031F701 /* Assets.xcassets */,
-				E91C6AA02033E2180031F701 /* LaunchScreen.storyboard */,
-				E91C6AA32033E2180031F701 /* Info.plist */,
+				E91C6ABB2033E3CC0031F701 /* Login */,
+				E91C6AB72033E3960031F701 /* Supporting Files */,
+				E91C6AC22033FDB60031F701 /* PersistanceStack.swift */,
 			);
 			path = "Trip-Planner";
 			sourceTree = "<group>";
@@ -118,6 +122,27 @@
 				E91C6AAE2033E2180031F701 /* Info.plist */,
 			);
 			path = "Trip-PlannerTests";
+			sourceTree = "<group>";
+		};
+		E91C6AB72033E3960031F701 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E91C6A9E2033E2180031F701 /* Assets.xcassets */,
+				E91C6AA02033E2180031F701 /* LaunchScreen.storyboard */,
+				E91C6AA32033E2180031F701 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E91C6ABB2033E3CC0031F701 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				E91C6ABE2033E9A70031F701 /* LoginViewModel.swift */,
+				E91C6AC02033E9DD0031F701 /* LoginViewModel+Moya.swift */,
+				E91C6ABC2033E9980031F701 /* LoginViewController.swift */,
+				E91C6AB82033E3C10031F701 /* Login.storyboard */,
+			);
+			name = Login;
 			sourceTree = "<group>";
 		};
 		EEF21C8843D1D8F564ABC68E /* Pods */ = {
@@ -220,6 +245,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E91C6AB92033E3C10031F701 /* Login.storyboard in Resources */,
 				E91C6AA22033E2180031F701 /* LaunchScreen.storyboard in Resources */,
 				E91C6A9F2033E2180031F701 /* Assets.xcassets in Resources */,
 				E91C6A9D2033E2180031F701 /* Main.storyboard in Resources */,
@@ -282,18 +308,22 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Trip-Planner/Pods-Trip-Planner-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/KeychainSwift/KeychainSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -355,9 +385,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E91C6A9A2033E2180031F701 /* SecondViewController.swift in Sources */,
+				E91C6ABD2033E9980031F701 /* LoginViewController.swift in Sources */,
 				E91C6A962033E2180031F701 /* AppDelegate.swift in Sources */,
-				E91C6A982033E2180031F701 /* FirstViewController.swift in Sources */,
+				E91C6AC32033FDB60031F701 /* PersistanceStack.swift in Sources */,
+				E91C6AC12033E9DD0031F701 /* LoginViewModel+Moya.swift in Sources */,
+				E91C6ABF2033E9A70031F701 /* LoginViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
