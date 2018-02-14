@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A66541F31D4B87025B45568C /* Pods_Trip_Planner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 511E6935C9E7B8B96EEA9D4B /* Pods_Trip_Planner.framework */; };
+		C491133D21BBCBE0B0E4C6FA /* Pods_Trip_PlannerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36293B72A4B1AD2C3E7A5265 /* Pods_Trip_PlannerTests.framework */; };
 		E91C6A962033E2180031F701 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91C6A952033E2180031F701 /* AppDelegate.swift */; };
 		E91C6A982033E2180031F701 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91C6A972033E2180031F701 /* FirstViewController.swift */; };
 		E91C6A9A2033E2180031F701 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91C6A992033E2180031F701 /* SecondViewController.swift */; };
@@ -27,6 +29,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2BC72F21D3C3E9DA5F19CCCA /* Pods-Trip-Planner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trip-Planner.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Trip-Planner/Pods-Trip-Planner.debug.xcconfig"; sourceTree = "<group>"; };
+		36293B72A4B1AD2C3E7A5265 /* Pods_Trip_PlannerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trip_PlannerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		511E6935C9E7B8B96EEA9D4B /* Pods_Trip_Planner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trip_Planner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B091E83011C60BEA1DFC0A9 /* Pods-Trip-PlannerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trip-PlannerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Trip-PlannerTests/Pods-Trip-PlannerTests.release.xcconfig"; sourceTree = "<group>"; };
+		A4FF57BC3BB265002A462CB2 /* Pods-Trip-PlannerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trip-PlannerTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Trip-PlannerTests/Pods-Trip-PlannerTests.debug.xcconfig"; sourceTree = "<group>"; };
+		A79B6F57BDA1B12273B2C591 /* Pods-Trip-Planner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trip-Planner.release.xcconfig"; path = "Pods/Target Support Files/Pods-Trip-Planner/Pods-Trip-Planner.release.xcconfig"; sourceTree = "<group>"; };
 		E91C6A922033E2180031F701 /* Trip-Planner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Trip-Planner.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E91C6A952033E2180031F701 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E91C6A972033E2180031F701 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -45,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A66541F31D4B87025B45568C /* Pods_Trip_Planner.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,18 +61,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C491133D21BBCBE0B0E4C6FA /* Pods_Trip_PlannerTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4A6E1F2BDC891C67A17C9824 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				511E6935C9E7B8B96EEA9D4B /* Pods_Trip_Planner.framework */,
+				36293B72A4B1AD2C3E7A5265 /* Pods_Trip_PlannerTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E91C6A892033E2180031F701 = {
 			isa = PBXGroup;
 			children = (
 				E91C6A942033E2180031F701 /* Trip-Planner */,
 				E91C6AAB2033E2180031F701 /* Trip-PlannerTests */,
 				E91C6A932033E2180031F701 /* Products */,
+				EEF21C8843D1D8F564ABC68E /* Pods */,
+				4A6E1F2BDC891C67A17C9824 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -99,6 +120,17 @@
 			path = "Trip-PlannerTests";
 			sourceTree = "<group>";
 		};
+		EEF21C8843D1D8F564ABC68E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2BC72F21D3C3E9DA5F19CCCA /* Pods-Trip-Planner.debug.xcconfig */,
+				A79B6F57BDA1B12273B2C591 /* Pods-Trip-Planner.release.xcconfig */,
+				A4FF57BC3BB265002A462CB2 /* Pods-Trip-PlannerTests.debug.xcconfig */,
+				8B091E83011C60BEA1DFC0A9 /* Pods-Trip-PlannerTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -106,9 +138,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E91C6AB12033E2180031F701 /* Build configuration list for PBXNativeTarget "Trip-Planner" */;
 			buildPhases = (
+				D17585AF74A15158535E8F47 /* [CP] Check Pods Manifest.lock */,
 				E91C6A8E2033E2180031F701 /* Sources */,
 				E91C6A8F2033E2180031F701 /* Frameworks */,
 				E91C6A902033E2180031F701 /* Resources */,
+				8D323A5EE1A89CC1F2C0DED5 /* [CP] Embed Pods Frameworks */,
+				9E26EA4FDABB3CFD7B07DF59 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -123,9 +158,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E91C6AB42033E2180031F701 /* Build configuration list for PBXNativeTarget "Trip-PlannerTests" */;
 			buildPhases = (
+				309EB931661E356BC9418ADA /* [CP] Check Pods Manifest.lock */,
 				E91C6AA42033E2180031F701 /* Sources */,
 				E91C6AA52033E2180031F701 /* Frameworks */,
 				E91C6AA62033E2180031F701 /* Resources */,
+				40F9F75E98E5BC0393156E23 /* [CP] Embed Pods Frameworks */,
+				DFF3C34281865012001D2A91 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -196,6 +234,121 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		309EB931661E356BC9418ADA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Trip-PlannerTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		40F9F75E98E5BC0393156E23 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Trip-PlannerTests/Pods-Trip-PlannerTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
+				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Trip-PlannerTests/Pods-Trip-PlannerTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8D323A5EE1A89CC1F2C0DED5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Trip-Planner/Pods-Trip-Planner-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
+				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Trip-Planner/Pods-Trip-Planner-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9E26EA4FDABB3CFD7B07DF59 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Trip-Planner/Pods-Trip-Planner-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D17585AF74A15158535E8F47 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Trip-Planner-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DFF3C34281865012001D2A91 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Trip-PlannerTests/Pods-Trip-PlannerTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E91C6A8E2033E2180031F701 /* Sources */ = {
@@ -355,6 +508,7 @@
 		};
 		E91C6AB22033E2180031F701 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2BC72F21D3C3E9DA5F19CCCA /* Pods-Trip-Planner.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -370,6 +524,7 @@
 		};
 		E91C6AB32033E2180031F701 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A79B6F57BDA1B12273B2C591 /* Pods-Trip-Planner.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -385,6 +540,7 @@
 		};
 		E91C6AB52033E2180031F701 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A4FF57BC3BB265002A462CB2 /* Pods-Trip-PlannerTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -402,6 +558,7 @@
 		};
 		E91C6AB62033E2180031F701 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8B091E83011C60BEA1DFC0A9 /* Pods-Trip-PlannerTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
