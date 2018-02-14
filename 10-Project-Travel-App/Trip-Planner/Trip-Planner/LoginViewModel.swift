@@ -116,4 +116,18 @@ struct LoginViewModel {
             }
         }
     }
+    
+    func dismissLoginToMainVc(from viewController: UIViewController) {
+        if let parentVc = viewController.presentingViewController, !(parentVc is LoginViewController) {
+            viewController.presentingViewController?.dismiss(animated: true)
+        } else {
+            let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+            guard let topVc = mainStoryboard.instantiateInitialViewController() else {
+                return assertionFailure("instantiateInitialViewController not set")
+            }
+            
+            topVc.modalTransitionStyle = .flipHorizontal
+            viewController.present(topVc, animated: true)
+        }
+    }
 }

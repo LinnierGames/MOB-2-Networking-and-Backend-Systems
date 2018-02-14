@@ -19,6 +19,8 @@
 		E91C6ABF2033E9A70031F701 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91C6ABE2033E9A70031F701 /* LoginViewModel.swift */; };
 		E91C6AC12033E9DD0031F701 /* LoginViewModel+Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91C6AC02033E9DD0031F701 /* LoginViewModel+Moya.swift */; };
 		E91C6AC32033FDB60031F701 /* PersistanceStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91C6AC22033FDB60031F701 /* PersistanceStack.swift */; };
+		E9BA8FDD2034C94C009CBE24 /* App+UIStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BA8FDC2034C94C009CBE24 /* App+UIStoryboard.swift */; };
+		E9BA8FE02034CABB009CBE24 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BA8FDF2034CABB009CBE24 /* ProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +54,8 @@
 		E91C6ABE2033E9A70031F701 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		E91C6AC02033E9DD0031F701 /* LoginViewModel+Moya.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginViewModel+Moya.swift"; sourceTree = "<group>"; };
 		E91C6AC22033FDB60031F701 /* PersistanceStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistanceStack.swift; sourceTree = "<group>"; };
+		E9BA8FDC2034C94C009CBE24 /* App+UIStoryboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App+UIStoryboard.swift"; sourceTree = "<group>"; };
+		E9BA8FDF2034CABB009CBE24 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				E91C6A952033E2180031F701 /* AppDelegate.swift */,
+				E9BA8FDE2034CA0F009CBE24 /* Trips */,
 				E91C6A9B2033E2180031F701 /* Main.storyboard */,
 				E91C6ABB2033E3CC0031F701 /* Login */,
 				E91C6AB72033E3960031F701 /* Supporting Files */,
@@ -130,6 +135,7 @@
 				E91C6A9E2033E2180031F701 /* Assets.xcassets */,
 				E91C6AA02033E2180031F701 /* LaunchScreen.storyboard */,
 				E91C6AA32033E2180031F701 /* Info.plist */,
+				E9BA8FDC2034C94C009CBE24 /* App+UIStoryboard.swift */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -143,6 +149,14 @@
 				E91C6AB82033E3C10031F701 /* Login.storyboard */,
 			);
 			name = Login;
+			sourceTree = "<group>";
+		};
+		E9BA8FDE2034CA0F009CBE24 /* Trips */ = {
+			isa = PBXGroup;
+			children = (
+				E9BA8FDF2034CABB009CBE24 /* ProfileViewController.swift */,
+			);
+			name = Trips;
 			sourceTree = "<group>";
 		};
 		EEF21C8843D1D8F564ABC68E /* Pods */ = {
@@ -387,7 +401,9 @@
 			files = (
 				E91C6ABD2033E9980031F701 /* LoginViewController.swift in Sources */,
 				E91C6A962033E2180031F701 /* AppDelegate.swift in Sources */,
+				E9BA8FDD2034C94C009CBE24 /* App+UIStoryboard.swift in Sources */,
 				E91C6AC32033FDB60031F701 /* PersistanceStack.swift in Sources */,
+				E9BA8FE02034CABB009CBE24 /* ProfileViewController.swift in Sources */,
 				E91C6AC12033E9DD0031F701 /* LoginViewModel+Moya.swift in Sources */,
 				E91C6ABF2033E9A70031F701 /* LoginViewModel.swift in Sources */,
 			);

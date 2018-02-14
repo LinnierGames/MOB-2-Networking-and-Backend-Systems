@@ -25,11 +25,17 @@ class LoginViewController: UIViewController, LoginViewModelDelegate {
     
     // MARK: - VOID METHODS
     
+    private func dismiss() {
+        textfieldUsername?.resignFirstResponder()
+        textfieldEmail.resignFirstResponder()
+        textfieldPassword.resignFirstResponder()
+    }
+    
     // MARK: View Model Delegate
     
     func loginModel(_ model: LoginViewModel, loginWasSuccessful success: Bool, message: String) {
         if success {
-            print("Go to main storyboard")
+            loginViewModel.dismissLoginToMainVc(from: self)
         } else {
             let alertError = UIAlertController(title: "Logging in", message: "error: \(message)", preferredStyle: .alert)
             alertError.addAction(UIAlertAction(title: "Dismiss", style: .default))
@@ -40,7 +46,7 @@ class LoginViewController: UIViewController, LoginViewModelDelegate {
     
     func loginModel(_ model: LoginViewModel, registerWasSuccessful success: Bool, message: String) {
         if success {
-            print("Go to main storyboard")
+            loginViewModel.login()
         } else {
             let alertError = UIAlertController(title: "Registering", message: "error: \(message)", preferredStyle: .alert)
             alertError.addAction(UIAlertAction(title: "Dismiss", style: .default))
@@ -54,11 +60,13 @@ class LoginViewController: UIViewController, LoginViewModelDelegate {
     @IBOutlet weak var buttonLogin: UIButton?
     @IBAction func pressLogin(_ sender: Any) {
         loginViewModel.login()
+        dismiss()
     }
     
     @IBOutlet weak var buttonRegister: UIButton?
     @IBAction func pressRegister(_ sender: Any) {
         loginViewModel.register()
+        dismiss()
     }
     
     @IBAction func pressBackToLogin(_ sender: Any) {

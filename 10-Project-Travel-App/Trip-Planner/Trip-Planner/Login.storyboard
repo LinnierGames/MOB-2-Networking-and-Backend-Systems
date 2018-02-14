@@ -96,7 +96,7 @@
                                 </constraints>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.83216959239999999" green="0.98548370600000001" blue="0.47333085539999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="pDk-iP-Um9" firstAttribute="leading" secondItem="WcA-Ig-hZd" secondAttribute="leading" constant="48" id="0Tc-4s-UQ6"/>
                             <constraint firstItem="pDk-iP-Um9" firstAttribute="centerY" secondItem="IcP-03-dOH" secondAttribute="centerY" id="NfO-DT-hTr"/>
@@ -204,7 +204,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.83216959239999999" green="0.98548370600000001" blue="0.47333085539999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="mSL-wc-HrS" firstAttribute="top" secondItem="MYh-au-JBJ" secondAttribute="top" id="6np-aS-Vce"/>
                             <constraint firstItem="MYh-au-JBJ" firstAttribute="trailing" secondItem="Csa-xO-Wf4" secondAttribute="trailing" constant="48" id="PYS-6O-gcD"/>
