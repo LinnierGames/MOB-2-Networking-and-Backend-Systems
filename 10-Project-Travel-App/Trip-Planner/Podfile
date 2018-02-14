@@ -11,6 +11,7 @@ target 'Trip-Planner' do
   pod 'RxCocoa'
   pod 'SwiftyJSON'
   pod 'KeychainSwift'
+  pod 'Kingfisher'
 
   target 'Trip-PlannerTests' do
     inherit! :search_paths

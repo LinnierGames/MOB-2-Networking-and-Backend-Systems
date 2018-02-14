@@ -63,11 +63,15 @@ struct LoginViewModel {
                 switch res.statusCode {
                 case 202:
                     guard
-                        let token = JSON(res.data).dictionary?["auth_token"]?.string
+                        let token = JSON(res.data).dictionary?["auth_token"]?.string,
+                        let userDataJson = JSON(res.data).dictionary?["data"],
+                        let userData = try? userDataJson.rawData(options: .prettyPrinted),
+                        let user = try? JSONDecoder().decode(TPUser.self, from: userData)
                         else {
                             return assertionFailure("missing auth_token")
                     }
                     
+                    PersistenceStack.loggedInUser = user
                     PersistenceStack.loggedInUserToken = token
                     
                     self.delegate.loginModel(self, loginWasSuccessful: true, message: "success")
@@ -114,20 +118,6 @@ struct LoginViewModel {
             case .failure(let error):
                 self.delegate.loginModel(self, registerWasSuccessful: false, message: error.localizedDescription)
             }
-        }
-    }
-    
-    func dismissLoginToMainVc(from viewController: UIViewController) {
-        if let parentVc = viewController.presentingViewController, !(parentVc is LoginViewController) {
-            viewController.presentingViewController?.dismiss(animated: true)
-        } else {
-            let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-            guard let topVc = mainStoryboard.instantiateInitialViewController() else {
-                return assertionFailure("instantiateInitialViewController not set")
-            }
-            
-            topVc.modalTransitionStyle = .flipHorizontal
-            viewController.present(topVc, animated: true)
         }
     }
 }

@@ -21,6 +21,9 @@
 		E91C6AC32033FDB60031F701 /* PersistanceStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91C6AC22033FDB60031F701 /* PersistanceStack.swift */; };
 		E9BA8FDD2034C94C009CBE24 /* App+UIStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BA8FDC2034C94C009CBE24 /* App+UIStoryboard.swift */; };
 		E9BA8FE02034CABB009CBE24 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BA8FDF2034CABB009CBE24 /* ProfileViewController.swift */; };
+		E9BA8FE32034CFAF009CBE24 /* TPUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BA8FE22034CFAF009CBE24 /* TPUser.swift */; };
+		E9BA8FE52034D911009CBE24 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BA8FE42034D911009CBE24 /* ProfileViewModel.swift */; };
+		E9BA8FE72034E437009CBE24 /* ProfileViewModel+Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BA8FE62034E437009CBE24 /* ProfileViewModel+Moya.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +59,9 @@
 		E91C6AC22033FDB60031F701 /* PersistanceStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistanceStack.swift; sourceTree = "<group>"; };
 		E9BA8FDC2034C94C009CBE24 /* App+UIStoryboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App+UIStoryboard.swift"; sourceTree = "<group>"; };
 		E9BA8FDF2034CABB009CBE24 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		E9BA8FE22034CFAF009CBE24 /* TPUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TPUser.swift; sourceTree = "<group>"; };
+		E9BA8FE42034D911009CBE24 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		E9BA8FE62034E437009CBE24 /* ProfileViewModel+Moya.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileViewModel+Moya.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +116,7 @@
 		E91C6A942033E2180031F701 /* Trip-Planner */ = {
 			isa = PBXGroup;
 			children = (
+				E9BA8FE12034CFA1009CBE24 /* Models */,
 				E91C6A952033E2180031F701 /* AppDelegate.swift */,
 				E9BA8FDE2034CA0F009CBE24 /* Trips */,
 				E91C6A9B2033E2180031F701 /* Main.storyboard */,
@@ -154,9 +161,19 @@
 		E9BA8FDE2034CA0F009CBE24 /* Trips */ = {
 			isa = PBXGroup;
 			children = (
+				E9BA8FE42034D911009CBE24 /* ProfileViewModel.swift */,
+				E9BA8FE62034E437009CBE24 /* ProfileViewModel+Moya.swift */,
 				E9BA8FDF2034CABB009CBE24 /* ProfileViewController.swift */,
 			);
 			name = Trips;
+			sourceTree = "<group>";
+		};
+		E9BA8FE12034CFA1009CBE24 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E9BA8FE22034CFAF009CBE24 /* TPUser.swift */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 		EEF21C8843D1D8F564ABC68E /* Pods */ = {
@@ -323,6 +340,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Trip-Planner/Pods-Trip-Planner-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/KeychainSwift/KeychainSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
@@ -333,6 +351,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
@@ -402,7 +421,10 @@
 				E91C6ABD2033E9980031F701 /* LoginViewController.swift in Sources */,
 				E91C6A962033E2180031F701 /* AppDelegate.swift in Sources */,
 				E9BA8FDD2034C94C009CBE24 /* App+UIStoryboard.swift in Sources */,
+				E9BA8FE52034D911009CBE24 /* ProfileViewModel.swift in Sources */,
+				E9BA8FE72034E437009CBE24 /* ProfileViewModel+Moya.swift in Sources */,
 				E91C6AC32033FDB60031F701 /* PersistanceStack.swift in Sources */,
+				E9BA8FE32034CFAF009CBE24 /* TPUser.swift in Sources */,
 				E9BA8FE02034CABB009CBE24 /* ProfileViewController.swift in Sources */,
 				E91C6AC12033E9DD0031F701 /* LoginViewModel+Moya.swift in Sources */,
 				E91C6ABF2033E9A70031F701 /* LoginViewModel.swift in Sources */,

@@ -1,41 +1,35 @@
 //
-//  LoginViewModel+Moya.swift
+//  ProfileViewModel+Moya.swift
 //  Trip-Planner
 //
-//  Created by Erick Sanchez on 2/13/18.
+//  Created by Erick Sanchez on 2/14/18.
 //  Copyright © 2018 LinnierGames. All rights reserved.
 //
 
 import Foundation
 import Moya
 
-struct UserHTTPBody: Codable {
-    let username: String?
-    let email: String
-    let password: String
+enum ProfileAPIEndpoints {
+    case UpdatePassword(TPUser, String)
 }
 
-enum LoginAPIEndpoints {
-    case Login(UserHTTPBody)
-    case Register(UserHTTPBody)
-}
-
-extension LoginAPIEndpoints: TargetType {
+extension ProfileAPIEndpoints: TargetType {
     var baseURL: URL {
         return apiUrl
     }
     
     var path: String {
         switch self {
-        case .Register:
-            return "/register"
-        case .Login:
-            return "/auth/login"
+        case .UpdatePassword(let user, _):
+            return "/auth/\(user.username)"
         }
     }
     
     var method: Moya.Method {
-        return .post
+        switch self {
+        case .UpdatePassword:
+            return .patch
+        }
     }
     
     var sampleData: Data {
@@ -44,11 +38,8 @@ extension LoginAPIEndpoints: TargetType {
     
     var task: Task {
         switch self {
-        case .Register(let user):
-            return .requestData(try! JSONEncoder().encode(user))
-        case .Login(let user):
-            return .requestJSONEncodable(user)
-        }
+        case .UpdatePassword(let user, let newPassword):
+            break
     }
     
     var headers: [String : String]? {
@@ -57,8 +48,9 @@ extension LoginAPIEndpoints: TargetType {
             "Accept": "application/json"
         ]
         switch self {
-        case .Register, .Login:
+        case .UpdatePassword(let user, _):
             return defaultHeader
         }
     }
 }
+

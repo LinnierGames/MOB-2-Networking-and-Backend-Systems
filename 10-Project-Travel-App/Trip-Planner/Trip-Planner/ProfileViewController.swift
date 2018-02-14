@@ -7,14 +7,20 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+import Kingfisher
 
 class ProfileViewController: UIViewController {
-
+    
     @IBOutlet weak var labelUsername: UILabel!
     @IBOutlet weak var labelEmail: UILabel!
     @IBOutlet weak var textfieldPassword: UITextField!
     @IBOutlet weak var thumbnail: UIImageView!
     @IBOutlet weak var buttonSave: UIBarButtonItem!
+    
+    let viewModel = ProfileViewModel()
+    private var bag = DisposeBag()
     
     // MARK: - RETURN VALUES
     
@@ -23,23 +29,50 @@ class ProfileViewController: UIViewController {
     // MARK: - IBACTIONS
     
     @IBAction func pressSave(_ sender: Any) {
+        textfieldPassword.resignFirstResponder()
+        viewModel.updatePassword()
     }
     
     @IBAction func pressLogout(_ sender: Any) {
-        //TODO: into view model
+        viewModel.logout()
+        
         let loginVc = UIStoryboard(storyboard: .Login).instantiateInitialViewController()!
-        
-        PersistenceStack.loggedInUserToken = nil
-        
         self.present(loginVc, animated: true)
     }
     
     // MARK: - LIFE CYCLE
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        viewModel.username.asObservable()
+            .map { "@\($0.lowercased())" }
+            .bind(to: labelUsername.rx.text).disposed(by: bag)
+        
+        viewModel.email.asObservable()
+            .bind(to: labelEmail.rx.text).disposed(by: bag)
+        
+        viewModel.email.asObservable()
+            .subscribe { [weak self] (event) in
+                if let user = PersistenceStack.loggedInUser {
+                    self?.thumbnail.kf.setImage(with: URL(string: user.thumbnail)!)
+                }
+            }.disposed(by: bag)
+        
+        textfieldPassword.rx.text
+            .subscribe({ [weak self] (event) in
+                if let newPassword = event.element {
+                    self?.buttonSave.isEnabled = newPassword?.count ?? 0 > 0
+                    self?.viewModel.password.value = newPassword
+                }
+            }).disposed(by: bag)
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         buttonSave.isEnabled = false
     }
-
+    
 }
+

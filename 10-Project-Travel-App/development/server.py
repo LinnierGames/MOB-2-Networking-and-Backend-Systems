@@ -33,7 +33,7 @@ def login():
     except KeyError:
         return jsonify(message="Cannot have any missing fields"), 400, None
 
-    user = app.db.users.find_one({"email": email}, {"username": 1, "password": 1})
+    user = app.db.users.find_one({"email": email}, {"_id": 0})
 
     if user is not None:
         if password == user["password"]:
@@ -44,7 +44,9 @@ def login():
                 "username": username
             })
 
-            return jsonify(message="Successfully logged in {}".format(username), auth_token=token), 202, None
+            del user["password"]
+
+            return jsonify(message="Successfully logged in {}".format(username), auth_token=token, data=user), 202, None
         else:
             return jsonify(message="Wrong email/password"), 401, None
     else:
@@ -63,7 +65,8 @@ def register():
     new_user = {
         "username": username,
         "email": email,
-        "password": password
+        "password": password,
+        "thumbnail": "http://placehold.it/150/92c952"
     }
 
     users_collection = app.db.users
@@ -86,9 +89,31 @@ def users():
     return data, 200, {"Content-Type": "application/json"}
 
 
+@app.route('/users/<string:_username>', methods=['PATCH'])
+def update_user(_username):
+    username = request.form.get("username", None)
+    email = request.form.get("email", None)
+    password = request.form.get("password", None)
+
+    user_request = profile(_username)
+
+    if user_request[1] != 200:
+        return user_request
+    else:
+        user_json = user_request[0]
+        if username is not None:
+            user_json["username"] = username
+        if email is not None:
+            user_json["email"] = email
+        if password is not None:
+            user_json["password"] = password
+
+        return jsonify(message="Updated profile"), 200, None
+
+
 @app.route('/users/<string:username>')
 def profile(username):
-    user = app.db.users.find_one({"username": username}, {"_id": 0, "username": 1, "name": 1})
+    user = app.db.users.find_one({"username": username}, {"_id": 0, "password": 0})
 
     if user is None:
         return page_not_found(error="user not found")

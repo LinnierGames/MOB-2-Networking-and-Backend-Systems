@@ -8,8 +8,14 @@
 
 import Foundation
 import KeychainSwift
+import Kingfisher
 
 struct PersistenceStack {
+    
+    static func logoutUser() {
+        loggedInUser = nil
+        loggedInUserToken = nil
+    }
     
     fileprivate static let LOGGED_IN_TOKEN = "LOGGED_IN_TOKEN"
     static var loggedInUserToken: String? {
@@ -25,6 +31,30 @@ struct PersistenceStack {
             let keychain = KeychainSwift()
             
             return keychain.get(LOGGED_IN_TOKEN)
+        }
+    }
+    
+    fileprivate static let LOGGED_IN_USER = "LOGGED_IN_USER"
+    static var loggedInUser: TPUser? {
+        set {
+            let userDefaults = UserDefaults.standard
+            if let user = newValue {
+                let userData = try! JSONEncoder().encode(user)
+                userDefaults.set(userData, forKey: LOGGED_IN_USER)
+            } else {
+                userDefaults.removeObject(forKey: LOGGED_IN_USER)
+            }
+        }
+        get {
+            let userDefaults = UserDefaults.standard
+            guard
+                let userData = userDefaults.object(forKey: LOGGED_IN_USER) as! Data?,
+                let user = try? JSONDecoder().decode(TPUser.self, from: userData)
+                else {
+                    return nil
+            }
+            
+            return user
         }
     }
     

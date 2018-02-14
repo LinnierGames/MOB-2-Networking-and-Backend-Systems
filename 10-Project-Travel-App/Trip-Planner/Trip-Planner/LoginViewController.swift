@@ -35,7 +35,18 @@ class LoginViewController: UIViewController, LoginViewModelDelegate {
     
     func loginModel(_ model: LoginViewModel, loginWasSuccessful success: Bool, message: String) {
         if success {
-            loginViewModel.dismissLoginToMainVc(from: self)
+            //TODO: fix dismissing and presting the main view from login screen
+            if let parentVc = self.presentingViewController, !(parentVc is LoginViewController) {
+                self.presentingViewController?.dismiss(animated: true)
+            } else {
+                let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+                guard let topVc = mainStoryboard.instantiateInitialViewController() else {
+                    return assertionFailure("instantiateInitialViewController not set")
+                }
+                
+                topVc.modalTransitionStyle = .flipHorizontal
+                self.present(topVc, animated: true)
+            }
         } else {
             let alertError = UIAlertController(title: "Logging in", message: "error: \(message)", preferredStyle: .alert)
             alertError.addAction(UIAlertAction(title: "Dismiss", style: .default))

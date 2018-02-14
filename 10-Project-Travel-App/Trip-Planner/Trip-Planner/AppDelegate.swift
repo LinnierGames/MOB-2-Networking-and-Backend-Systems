@@ -8,6 +8,12 @@
 
 import UIKit
 
+#if DEBUG
+let apiUrl = URL(string: "http://127.0.0.1:5000")!
+#else
+let apiUrl: URL = { fatalError("not implelemnted") }()
+#endif
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
