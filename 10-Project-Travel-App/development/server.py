@@ -67,18 +67,12 @@ def users():
 
 @app.route('/users/<string:username>')
 def profile(username):
-    user = app.db.users.find({"username": username})
+    user = app.db.users.find_one({"username": username}, {"_id": 0, "username": 1, "name": 1})
 
     if user is None:
         return page_not_found(error="user not found")
     else:
-        for doc in user:
-            found_user = {
-                'username': doc["username"],
-                'name': doc["name"]
-            }
-
-            return jsonify(found_user), 200, {"Content-Type": "application/json"}
+        return jsonify(user), 200, {"Content-Type": "application/json"}
 
 
 @app.route('/users/<string:username>', methods=['DELETE'])
