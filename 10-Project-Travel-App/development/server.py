@@ -1,11 +1,10 @@
-from flask import Flask, request, make_response, url_for, redirect, abort, render_template, jsonify
-import pdb
+from flask import Flask, request, make_response, jsonify
 from flask_restful import Resource, Api
-import hashlib
 from pymongo import MongoClient
 from utils.mongo_json_encoder import JSONEncoder
 from bson.objectid import ObjectId
 import bcrypt
+import pdb
 
 app = Flask(__name__)
 mongo = MongoClient('localhost', 27017)
@@ -13,150 +12,127 @@ app.db = mongo.trip_planner_development
 app.bcrypt_rounds = 12
 api = Api(app)
 
+
 ## Write Resources here
 
-token_table = []
+class MyObject(Resource):
 
-# Add api routes here
+    def post(self):
+        try:
+            new_password = request.json["password"]
+            new_username = request.json["username"]
+            new_email = request.json["email"]
+        except KeyError:
+            response = jsonify(message="cannot have missing fields")
+            response.status_code = 400
 
+            return response
 
-@app.route('/')
-def home():
-    return jsonify(message="index route not supported")
+        email_is_found = app.db.myobjects.find_one({"email": new_email})
+        if email_is_found is not None:
+            response = jsonify(message="email already used")
+            response.status_code = 401
 
+            return response
 
-@app.route('/auth/login', methods=['POST'])
-def login():
-    try:
-        email = request.json["email"]
-        password = request.json["password"]
-    except KeyError:
-        return jsonify(message="Cannot have any missing fields"), 400, None
+        username_is_found = app.db.myobjects.find_one({"username": new_username})
+        if username_is_found is not None:
+            response = jsonify(message="username already used")
+            response.status_code = 401
 
-    user = app.db.users.find_one({"email": email}, {"_id": 0})
+            return response
 
-    if user is not None:
-        if password == user["password"]:
-            username = user["username"]
-            token = username.encode('hex')
-            app.db.tokens.insert_one({
-                "token": token,
-                "username": username
-            })
+        user = {
+            "username": new_username,
+            "email": new_email,
+            "password": new_password
+        }
 
-            del user["password"]
+        result = app.db.myobjects.insert(user)
 
-            return jsonify(message="Successfully logged in {}".format(username), auth_token=token, data=user), 202, None
+        response = jsonify(message="successful insert", data=user)
+        response.status_code = 201
+
+        # if result.inserted
+
+        return response
+
+    def get(self, myobject_id):
+        myobject = app.db.myobjects.find_one({"_id": ObjectId(myobject_id)})
+
+        if myobject is None:
+            response = jsonify(message="resource not found")
+            response.status_code = 404
+
+            return response
         else:
-            return jsonify(message="Wrong email/password"), 401, None
-    else:
-        return jsonify(message="Email not found"), 404, None
+            return myobject
+
+    def put(self, myobject_id):
+
+        is_found = app.db.myobjects.find_one({"_id": ObjectId(myobject_id)})
+
+        if is_found is None:
+            response = jsonify(message="resource not found")
+            response.status_code = 404
+
+            return response
+
+        try:
+            new_password = request.json["password"]
+            new_username = request.json["username"]
+            new_email = request.json["email"]
+        except KeyError:
+            response = jsonify(message="cannot have missing fields")
+            response.status_code = 400
+
+            return response
+
+        app.db.myobjects.update_one({"_id": ObjectId(myobject_id)}, {
+            "$set": {
+                "password": new_password,
+                "username": new_username,
+                "email": new_email
+            }
+        })
+
+        response = jsonify(message="update successful")
+        response.status_code = 202
+
+        return response
 
 
-@app.route('/register', methods=['POST'])
-def register():
-    try:
-        username = request.json["username"]
-        email = request.json["email"]
-        password = request.json["password"]
-    except KeyError:
-        return jsonify(message="Cannot have any missing fields"), 400, None
+    def patch(self, myobject_id):
 
-    new_user = {
-        "username": username,
-        "email": email,
-        "password": password,
-        "thumbnail": "http://placehold.it/150/92c952"
-    }
+        found_object = app.db.myobjects.find_one({"_id": ObjectId(myobject_id)})
 
-    users_collection = app.db.users
+        if found_object is None:
+            response = jsonify(message="resource not found")
+            response.status_code = 404
 
-    if users_collection.find_one({"email": email}) is not None:
-        return jsonify(message="Email already exists"), 403, None
-    elif users_collection.find_one({"username": username}) is not None:
-        return jsonify(message="Username already exists"), 403, None
+            return response
 
-    users_collection.insert_one(new_user)
+        new_password = request.json.get("password", found_object["password"])
+        new_username = request.json.get("username", found_object["username"])
+        new_email = request.json.get("email", found_object["email"])
 
-    return jsonify(message="Successfully registered {}".format(username)), 201, None
+        app.db.myobjects.update_one({"_id": ObjectId(myobject_id)}, {
+            "$set": {
+                "password": new_password,
+                "username": new_username,
+                "email": new_email
+            }
+        })
 
+        response = jsonify(message="update successful")
+        response.status_code = 202
 
-@app.route('/users')
-def users():
-    users_collection = list(app.db.users.find())
-    data = JSONEncoder().encode(users_collection)
-
-    return data, 200, {"Content-Type": "application/json"}
+        return response
 
 
-@app.route('/users/<string:_username>', methods=['PATCH'])
-def update_user(_username):
-    username = request.form.get("username", None)
-    email = request.form.get("email", None)
-    password = request.form.get("password", None)
+## Add api routes here
 
-    user_request = profile(_username)
-
-    if user_request[1] != 200:
-        return user_request
-    else:
-        user_json = user_request[0]
-        if username is not None:
-            user_json["username"] = username
-        if email is not None:
-            user_json["email"] = email
-        if password is not None:
-            user_json["password"] = password
-
-        return jsonify(message="Updated profile"), 200, None
-
-
-@app.route('/users/<string:username>')
-def profile(username):
-    user = app.db.users.find_one({"username": username}, {"_id": 0, "password": 0})
-
-    if user is None:
-        return page_not_found(error="user not found")
-    else:
-        return jsonify(user), 200, {"Content-Type": "application/json"}
-
-
-@app.route('/users/<string:username>', methods=['DELETE'])
-def delete_profile(username):
-    auth_token = None
-    try:
-        auth_token = request.form["Token"]
-    except KeyError:
-        return bad_request(error="user auth token required for this action")
-    decoded_username = None
-    try:
-        decoded_username = auth_token.decode('hex')
-    except KeyError:
-        return bad_request(error="naw")
-
-    if decoded_username == username:
-        is_found = app.db.users.find_one({'username': username})
-
-        if is_found is not None:
-            app.db.tokens.delete_one({"username": username})
-            app.db.users.delete_one({"username": username})
-
-            return jsonify(message="{} was deleted".format(username)), 202, None
-        else:
-            return bad_request(error="{} was not found".format(username))
-    else:
-        return jsonify(message="Unauthorized request"), 401, None
-
-
-@app.errorhandler(404)
-def page_not_found(error):
-    return render_template('page_not_found.html', error=error), 404, None
-
-
-@app.errorhandler(400)
-def bad_request(error):
-    return render_template('page_not_found.html', error=error), 400, None
-
+api.add_resource(MyObject, '/myobject/', '/myobject/<string:myobject_id>')
 
 #  Custom JSON serializer for flask_restful
 @api.representation('application/json')
@@ -164,6 +140,7 @@ def output_json(data, code, headers=None):
     resp = make_response(JSONEncoder().encode(data), code)
     resp.headers.extend(headers or {})
     return resp
+
 
 if __name__ == '__main__':
     # Turn this on in debug mode to get detailled information about request
