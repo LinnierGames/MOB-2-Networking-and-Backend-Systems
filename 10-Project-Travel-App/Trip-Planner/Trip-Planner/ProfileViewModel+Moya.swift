@@ -40,6 +40,7 @@ extension ProfileAPIEndpoints: TargetType {
         switch self {
         case .UpdatePassword(let user, let newPassword):
             break
+        }
     }
     
     var headers: [String : String]? {
@@ -53,4 +54,6 @@ extension ProfileAPIEndpoints: TargetType {
         }
     }
 }
+
+
 
