@@ -60,6 +60,10 @@ struct LoginViewModel {
         apiProvider.request(.Login(user)) { (result) in
             switch result {
             case .success(let res):
+                guard let resMessage = JSON(res.data).dictionary?["message"]?.string else {
+                    return assertionFailure("failed to get message from response")
+                }
+                
                 switch res.statusCode {
                 case 202:
                     guard
@@ -74,18 +78,18 @@ struct LoginViewModel {
                     PersistenceStack.loggedInUser = user
                     PersistenceStack.loggedInUserToken = token
                     
-                    self.delegate.loginModel(self, loginWasSuccessful: true, message: "success")
+                    self.delegate.loginModel(self, loginWasSuccessful: true, message: resMessage)
                 case 401: //wrong login
-                    self.delegate.loginModel(self, loginWasSuccessful: false, message: "wrong email/password")
+                    self.delegate.loginModel(self, loginWasSuccessful: false, message: resMessage)
                 case 404: //Not found
-                    self.delegate.loginModel(self, loginWasSuccessful: false, message: "email not found")
+                    self.delegate.loginModel(self, loginWasSuccessful: false, message: resMessage)
                 case 500: //internal error
-                    self.delegate.loginModel(self, registerWasSuccessful: false, message: "internal server error has occured")
+                    self.delegate.loginModel(self, loginWasSuccessful: false, message: resMessage)
                 default:
                     break
                 }
             case .failure(let error):
-                self.delegate.loginModel(self, registerWasSuccessful: false, message: error.localizedDescription)
+                self.delegate.loginModel(self, loginWasSuccessful: false, message: error.localizedDescription)
             }
         }
     }
@@ -99,9 +103,9 @@ struct LoginViewModel {
             case .success(let res):
                 switch res.statusCode {
                 case 201:
-                    self.delegate.loginModel(self, loginWasSuccessful: true, message: "success")
+                    self.delegate.loginModel(self, registerWasSuccessful: true, message: "success")
                 case 400: //missing fields
-                    self.delegate.loginModel(self, loginWasSuccessful: false, message: "cannot have missing fields")
+                    self.delegate.loginModel(self, registerWasSuccessful: false, message: "cannot have missing fields")
                 case 403: //user already exsits
                     guard
                         let ununiqueFieldMessage = JSON(res.data).dictionary?["message"]?.string

@@ -45,7 +45,7 @@ extension LoginAPIEndpoints: TargetType {
     var task: Task {
         switch self {
         case .Register(let user):
-            return .requestData(try! JSONEncoder().encode(user))
+            return .requestJSONEncodable(user)
         case .Login(let user):
             return .requestJSONEncodable(user)
         }
