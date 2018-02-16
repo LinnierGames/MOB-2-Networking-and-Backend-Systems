@@ -12,6 +12,9 @@ target 'Trip-Planner' do
   pod 'SwiftyJSON'
   pod 'KeychainSwift'
   pod 'Kingfisher'
+  
+  pod 'NextResponderTextField'
+
 
   target 'Trip-PlannerTests' do
     inherit! :search_paths

@@ -11,6 +11,7 @@ import RxSwift
 import Moya
 import SwiftyJSON
 
+//TODO: use RxSwift to communicate back to the view controller
 protocol LoginViewModelDelegate {
     func loginModel(_ model: LoginViewModel, loginWasSuccessful success: Bool, message: String)
     func loginModel(_ model: LoginViewModel, registerWasSuccessful success: Bool, message: String)
@@ -53,8 +54,10 @@ struct LoginViewModel {
         return Variable(true)
     }
     
-    func login() {
-        precondition(isValid().value, "Button was clickable while entries were not valid")
+    func login(unsuccessful: () -> ()) {
+        if isValid().value == false {
+            return unsuccessful()
+        }
         
         let user = UserHTTPBody(username: nil, email: email.value!, password: password.value!)
         apiProvider.request(.Login(user)) { (result) in
@@ -94,8 +97,10 @@ struct LoginViewModel {
         }
     }
     
-    func register() {
-        //precondition(isValid().value, "Button was clickable while entries were not valid")
+    func register(unsuccessful: () -> ()) {
+        if isValid().value == false {
+            return unsuccessful()
+        }
         
         let user = UserHTTPBody(username: username.value, email: email.value!, password: password.value!)
         apiProvider.request(.Register(user)) { (result) in
