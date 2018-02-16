@@ -199,6 +199,7 @@ def login():
     if user is not None:
         if password == user["password"]:
             username = user["username"]
+            # FIXME: use better token generator
             token = username.encode('hex')
             app.db.tokens.insert_one({
                 "token": token,
