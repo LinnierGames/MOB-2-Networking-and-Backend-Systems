@@ -29,6 +29,7 @@ class ProfileViewController: UIViewController {
     // MARK: - IBACTIONS
     
     @IBAction func pressSave(_ sender: Any) {
+        //FIXME: RCs
         textfieldPassword.resignFirstResponder()
         let alertUpdating = UIAlertController(title: "Update Profile", message: "please wait", preferredStyle: .alert)
         viewModel.updatePassword { (result) in
@@ -36,6 +37,7 @@ class ProfileViewController: UIViewController {
             switch result {
             case .success(let message):
                 alertMessage = message
+                self.textfieldPassword.text = ""
             case .failure(let errMessage):
                 alertMessage = String(describing: errMessage)
             }

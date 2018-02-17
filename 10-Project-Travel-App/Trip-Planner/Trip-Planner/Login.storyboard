@@ -66,7 +66,7 @@
                                         <rect key="frame" x="0.0" y="81" width="279" height="28"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" returnKeyType="go"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="go" secureTextEntry="YES"/>
                                         <connections>
                                             <outlet property="nextResponderField" destination="mTa-gx-5gk" id="2QS-mz-otg"/>
                                         </connections>
