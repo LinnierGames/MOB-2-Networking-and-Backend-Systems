@@ -30,7 +30,23 @@ class ProfileViewController: UIViewController {
     
     @IBAction func pressSave(_ sender: Any) {
         textfieldPassword.resignFirstResponder()
-        viewModel.updatePassword()
+        let alertUpdating = UIAlertController(title: "Update Profile", message: "please wait", preferredStyle: .alert)
+        viewModel.updatePassword { (result) in
+            let alertMessage: String
+            switch result {
+            case .success(let message):
+                alertMessage = message
+            case .failure(let errMessage):
+                alertMessage = String(describing: errMessage)
+            }
+            alertUpdating.dismiss(animated: true, completion: {
+                let alert = UIAlertController(title: "Update Profile", message: alertMessage, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Dismiss", style: .default))
+                self.present(alert, animated: true)
+            })
+            
+        }
+        self.present(alertUpdating, animated: true)
     }
     
     @IBAction func pressLogout(_ sender: Any) {

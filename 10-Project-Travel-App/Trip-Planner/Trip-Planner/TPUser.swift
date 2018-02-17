@@ -10,12 +10,14 @@ import Foundation
 import UIKit
 
 struct TPUser: Codable {
+    let id: String
     let username: String
     let email: String
     let thumbnail: String
     //let thumbnailImage: UIImage? = nil
     
     enum CodingKeys: String, CodingKey {
+        case id = "_id"
         case username
         case email
         case thumbnail

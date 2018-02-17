@@ -13,47 +13,53 @@ enum ProfileAPIEndpoints {
     case UpdatePassword(TPUser, String)
 }
 
-//extension ProfileAPIEndpoints: TargetType {
-//    var baseURL: URL {
-//        return apiUrl
-//    }
-//
-//    var path: String {
-//        switch self {
-//        case .UpdatePassword(let user, _):
-//            return "/auth/\(user.username)"
-//        }
-//    }
-//
-//    var method: Moya.Method {
-//        switch self {
-//        case .UpdatePassword:
-//            return .patch
-//        }
-//    }
-//
-//    var sampleData: Data {
-//        return "nothing yet".data(using: .utf8)!
-//    }
-//
-//    var task: Task {
-//        switch self {
-//        case .UpdatePassword(let user, let newPassword):
-//            break
-//        }
-//    }
-//
-//    var headers: [String : String]? {
-//        let defaultHeader = [
-//            "Content-Type": "application/json",
-//            "Accept": "application/json"
-//        ]
-//        switch self {
-//        case .UpdatePassword(let user, _):
-//            return defaultHeader
-//        }
-//    }
-//}
+extension ProfileAPIEndpoints: TargetType {
+    var baseURL: URL {
+        return apiUrl
+    }
+
+    var path: String {
+        switch self {
+        case .UpdatePassword(let user, _):
+            return "/user/\(user.id)"
+        }
+    }
+
+    var method: Moya.Method {
+        switch self {
+        case .UpdatePassword:
+            return .patch
+        }
+    }
+
+    var sampleData: Data {
+        return "nothing yet".data(using: .utf8)!
+    }
+
+    var task: Task {
+        switch self {
+        case .UpdatePassword(_, let newPassword):
+            return .requestJSONEncodable(["password": newPassword])
+        }
+    }
+
+    var headers: [String : String]? {
+        var defaultHeader = [
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        ]
+        switch self {
+        case .UpdatePassword:
+            guard let token = PersistenceStack.loggedInUserToken else {
+                preconditionFailure("User logged in without a stored token in keychains")
+            }
+            
+            defaultHeader["Auth"] = token
+            
+            return defaultHeader
+        }
+    }
+}
 
 
 

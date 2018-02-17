@@ -148,6 +148,9 @@ class User(Resource):
 
         return response
 
+    # can return: 400 missing token
+    # can return: 404 user not found form _id
+    # can return: 401 invalid token, unmatching id with given token
     def _auth(self, id):
         try:
             token = request.headers["Auth"]
@@ -208,7 +211,9 @@ def login():
             })
 
             del user["password"]
+            user_id = str(user["_id"])
             del user["_id"]
+            user["_id"] = user_id
 
             return jsonify(message="Successfully logged in {}".format(username), auth_token=token, data=user), 202, None
         else:

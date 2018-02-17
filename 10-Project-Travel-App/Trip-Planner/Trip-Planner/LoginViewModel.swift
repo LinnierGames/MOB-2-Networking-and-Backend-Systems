@@ -33,32 +33,9 @@ struct LoginViewModel {
         self.delegate = delegate
     }
     
-    func isValid() -> Variable<Bool> {
-        guard
-            let emailValue = email.value,
-            let passwordValue = password.value
-            else {
-                return Variable(false)
-        }
-        
-        if username.value != nil {
-            if username.value!.count < 6 {
-                return Variable(false)
-            }
-        }
-        
-        if emailValue.count < 6 || passwordValue.count < 6 {
-            return Variable(false)
-        }
-        
-        return Variable(true)
-    }
+    //TODO: validate for empty fields
     
     func login(unsuccessful: () -> ()) {
-        if isValid().value == false {
-            return unsuccessful()
-        }
-        
         let user = UserHTTPBody(username: nil, email: email.value!, password: password.value!)
         apiProvider.request(.Login(user)) { (result) in
             switch result {
@@ -98,10 +75,6 @@ struct LoginViewModel {
     }
     
     func register(unsuccessful: () -> ()) {
-        if isValid().value == false {
-            return unsuccessful()
-        }
-        
         let user = UserHTTPBody(username: username.value, email: email.value!, password: password.value!)
         apiProvider.request(.Register(user)) { (result) in
             switch result {
