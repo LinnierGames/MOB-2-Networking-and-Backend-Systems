@@ -15,70 +15,67 @@ api = Api(app)
 
 ## Write Resources here
 
-class User(Resource):
-    # def post(self):
-    #     collection = app.db.users
-    #     try:
-    #         new_password = request.json["password"]
-    #         new_username = request.json["username"]
-    #         new_email = request.json["email"]
-    #     except KeyError:
-    #         response = jsonify(message="cannot have missing fields")
-    #         response.status_code = 400
-    #
-    #         return response
-    #
-    #     # unique email
-    #     email_is_found = collection.find_one({"email": new_email})
-    #     if email_is_found is not None:
-    #         response = jsonify(message="email already used")
-    #         response.status_code = 401
-    #
-    #         return response
-    #
-    #     # unique username
-    #     username_is_found = collection.find_one({"username": new_username})
-    #     if username_is_found is not None:
-    #         response = jsonify(message="username already used")
-    #         response.status_code = 401
-    #
-    #         return response
-    #
-    #     user = {
-    #         "username": new_username,
-    #         "email": new_email,
-    #         "password": new_password
-    #     }
-    #
-    #     app.db.myobjects.insert(user)
-    #
-    #     user = collection.find_one({"_id", ObjectId(user["_id"])}, {"_id": 0})
-    #
-    #     response = jsonify(message="successful insert", data=user)
-    #     response.status_code = 201
-    #
-    #     return response
+# can return: 400 missing token
+# can return: 404 user not found form _id
+# can return: 401 invalid token, unmatching id with given token
+def _auth(object_id):
+    try:
+        token = request.headers["Auth"]
+    except KeyError:
+        response = jsonify(message="auth token cannot be missing")
+        response.status_code = 400
 
-    def get(self, id):
+        return response
+
+    found_object = app.db.users.find_one({"_id": ObjectId(object_id)})
+
+    if found_object is None:
+        response = jsonify(message="user not found")
+        response.status_code = 404
+
+        return response
+
+    user_for_given_token = app.db.tokens.find_one({"token": token})
+    if user_for_given_token is None:
+        response = jsonify(message="Unauthorized")
+        response.status_code = 401
+
+        return response
+
+    if str(user_for_given_token["user_id"]) != object_id:
+        response = jsonify(message="Unauthorized")
+        response.status_code = 401
+
+        return response
+
+    return None
+
+class User(Resource):
+
+    def get(self, user_id):
         collection = app.db.users
-        user = collection.find_one({"_id": ObjectId(id)}, {"_id": 0})
+        user = collection.find_one({"_id": ObjectId(user_id)}, {"_id": 0, "password": 0})
 
         if user is None:
             response = jsonify(message="resource not found")
             response.status_code = 404
 
             return response
-        else:
-            return user
+
+        response = jsonify(message="found user", data=user)
+        response.status_code = 200
+
+        return response
 
     def put(self, id):
-        auth = self._auth(id)
+        # TODO: DRY autho
+        auth = _auth(user_id)
 
         if auth is not None:
             return auth
 
         collection = app.db.users
-        is_found = collection.find_one({"_id": ObjectId(id)})
+        is_found = collection.find_one({"_id": ObjectId(user_id)})
 
         if is_found is None:
             response = jsonify(message="user not found")
@@ -96,7 +93,7 @@ class User(Resource):
 
             return response
 
-        collection.update_one({"_id": ObjectId(id)}, {
+        collection.update_one({"_id": ObjectId(user_id)}, {
             "$set": {
                 "password": new_password,
                 "username": new_username,
@@ -109,19 +106,22 @@ class User(Resource):
 
         return response
 
-    def patch(self, id):
-        auth = self._auth(id)
+    def patch(self, user_id):
+        # TODO: DRY autho
+        auth = _auth(user_id)
 
         if auth is not None:
             return auth
 
-        found_object = app.db.users.find_one({"_id": ObjectId(id)})
+        # preconditions: _auth checks if user exists
+
+        found_object = app.db.users.find_one({"_id": ObjectId(user_id)})
 
         new_password = request.json.get("password", found_object["password"])
         new_username = request.json.get("username", found_object["username"])
         new_email = request.json.get("email", found_object["email"])
 
-        app.db.users.update_one({"_id": ObjectId(id)}, {
+        app.db.users.update_one({"_id": ObjectId(user_id)}, {
             "$set": {
                 "password": new_password,
                 "username": new_username,
@@ -134,57 +134,174 @@ class User(Resource):
 
         return response
 
-    def delete(self, id):
-        auth = self._auth(id)
+    def delete(self, user_id):
+        # TODO: DRY autho
+        auth = _auth(user_id)
 
         if auth is not None:
             return auth
 
-        app.db.users.delete_one({"_id": ObjectId(id)})
-        app.db.tokens.delete_many({"user_id": ObjectId(id)})
+        app.db.users.delete_one({"_id": ObjectId(user_id)})
+        app.db.tokens.delete_many({"user_id": ObjectId(user_id)})
 
         response = jsonify(message="delete successful")
         response.status_code = 202
 
         return response
 
-    # can return: 400 missing token
-    # can return: 404 user not found form _id
-    # can return: 401 invalid token, unmatching id with given token
-    def _auth(self, id):
+api.add_resource(User, '/user/', '/user/<string:user_id>')
+
+class Trip(Resource):
+    def post(self):
+        # TODO: DRY autho
         try:
-            token = request.headers["Auth"]
+            user_id = request.json["user_id"]
+            title = request.json["title"]
         except KeyError:
-            response = jsonify(message="auth token cannot be missing")
+            response = jsonify(message="Cannot have missing fields")
             response.status_code = 400
 
             return response
 
-        found_object = app.db.users.find_one({"_id": ObjectId(id)})
+        auth = _auth(user_id)
 
-        if found_object is None:
-            response = jsonify(message="user not found")
+        if auth is not None:
+            return auth
+
+        new_trip = {
+            "user_id": user_id,
+            "title": title
+        }
+
+        result = app.db.trips.insert_one(new_trip)
+
+        trip = new_trip
+        trip["_id"] = str(result.inserted_id)
+
+        response = jsonify(message="added trip successfully", data=trip)
+        response.status_code = 201
+
+        return response
+
+    def get(self, trip_id):
+        # TODO: DRY autho
+        try:
+            user_id = request.args["user_id"]
+        except KeyError:
+            response = jsonify(message="Cannot have missing fields")
+            response.status_code = 400
+
+            return response
+
+        auth = _auth(user_id)
+
+        if auth is not None:
+            return auth
+
+        found_trip = app.db.trips.find_one({"_id": ObjectId(trip_id)}, {"_id": 0})
+
+        if found_trip is None:
+            response = jsonify(message="Could not find trip")
             response.status_code = 404
 
             return response
 
-        user_for_given_token = app.db.tokens.find_one({"token": token})
-        if user_for_given_token is None:
+        trip_user = app.db.users.find_one({"_id": ObjectId(found_trip["user_id"])})
+        trip_user["_id"] = str(trip_user["_id"])
+
+        found_trip["user"] = trip_user
+        del found_trip["user_id"]
+
+        response = jsonify(message="found a trip", data=found_trip)
+        response.status_code = 202
+
+        return response
+
+    def patch(self, trip_id):
+        # TODO: DRY autho
+        try:
+            user_id = request.json["user_id"]
+        except KeyError:
+            response = jsonify(message="missing user_id")
+            response.status_code = 400
+
+            return response
+
+        auth = _auth(user_id)
+
+        if auth is not None:
+            return auth
+
+        # preconditions: _auth checks if user exists
+
+        # TODO: Dry
+        found_trip = app.db.trips.find_one({"_id": ObjectId(trip_id)})
+
+        if found_trip is None:
+            response = jsonify(message="Trip not found")
+            response.status_code = 404
+
+            return response
+
+        if found_trip["user_id"] != user_id:
             response = jsonify(message="Unauthorized")
             response.status_code = 401
 
             return response
 
-        if str(user_for_given_token["user_id"]) != id:
+        # authorized: token and user_id has permission
+
+        new_title = request.json.get("title", found_trip["title"])
+
+        app.db.trips.update_one({"_id": ObjectId(trip_id)}, {
+            "$set": {
+                "title": new_title,
+            }
+        })
+
+        response = jsonify(message="update successful")
+        response.status_code = 202
+
+        return response
+
+    def delete(self, trip_id):
+        try:
+            user_id = request.json["user_id"]
+        except KeyError:
+            response = jsonify(message="missing user_id")
+            response.status_code = 400
+
+            return response
+
+        # TODO: DRY autho
+        auth = _auth(user_id)
+
+        if auth is not None:
+            return auth
+
+        # TODO: Dry
+        found_trip = app.db.trips.find_one({"_id": ObjectId(trip_id)})
+
+        if found_trip is None:
+            response = jsonify(message="Trip not found")
+            response.status_code = 404
+
+            return response
+
+        if found_trip["user_id"] != user_id:
             response = jsonify(message="Unauthorized")
             response.status_code = 401
 
             return response
 
-        return None
+        app.db.users.delete_one({"_id": ObjectId(trip_id)})
 
+        response = jsonify(message="delete successful")
+        response.status_code = 202
 
-api.add_resource(User, '/user/', '/user/<string:id>')
+        return response
+
+api.add_resource(Trip, '/trip/', '/trip/<string:trip_id>')
 
 # Add api routes here
 
@@ -231,6 +348,7 @@ def register():
     except KeyError:
         return jsonify(message="Cannot have any missing fields"), 400, None
 
+    # FIXME: store passwords elsewhere
     new_user = {
         "username": username,
         "email": email,
@@ -245,9 +363,12 @@ def register():
     elif users_collection.find_one({"username": username}) is not None:
         return jsonify(message="Username already exists"), 403, None
 
-    users_collection.insert_one(new_user)
+    result = users_collection.insert_one(new_user)
 
-    return jsonify(message="Successfully registered {}".format(username)), 201, None
+    response = jsonify(message="Successfully registered {}".format(username))
+    response.status_code = 201
+
+    return response
 
 #  Custom JSON serializer for flask_restful
 
