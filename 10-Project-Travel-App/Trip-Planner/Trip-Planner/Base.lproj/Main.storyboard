@@ -94,7 +94,7 @@
         <!--My Trips-->
         <scene sceneID="mUH-3P-yQj">
             <objects>
-                <tableViewController id="HtG-QU-E5p" sceneMemberID="viewController">
+                <tableViewController id="HtG-QU-E5p" customClass="TripsTableViewController" customModule="Trip_Planner" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Pl5-zJ-09z">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -136,10 +136,13 @@
                     <navigationItem key="navigationItem" title="My Trips" id="24T-Gh-aFV">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="0Uq-4q-xIo">
                             <connections>
-                                <segue destination="fNd-nt-YLw" kind="show" identifier="show add" id="o1A-bU-CNc"/>
+                                <action selector="pressAddTrip:" destination="HtG-QU-E5p" id="VZs-du-Vrm"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="buttonAdd" destination="0Uq-4q-xIo" id="uRI-C0-GFV"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V5a-cX-5OM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -336,7 +339,4 @@
     <resources>
         <image name="second" width="30" height="30"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="3OD-JO-0p0"/>
-    </inferredMetricsTieBreakers>
 </document>

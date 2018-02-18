@@ -9,10 +9,19 @@
 import Foundation
 import Moya
 
-struct JSONTrip {
+struct JSONTrip: Codable {
     let title: String
+    let user: TPUser! = nil
     
-    let uesr: TPUser!
+    enum CodingKeyse: String, CodingKey {
+        case title
+    }
+}
+
+extension TPTrip {
+    var jsonBody: JSONTrip {
+        return JSONTrip(title: self.title)
+    }
 }
 
 enum TripAPIEndpoints {
@@ -28,6 +37,7 @@ extension TripAPIEndpoints: TargetType {
         switch self {
         case .AddTrip:
             return "/trip/"
+        }
     }
     
     var method: Moya.Method {
@@ -42,6 +52,7 @@ extension TripAPIEndpoints: TargetType {
         switch self {
         case .AddTrip(let trip):
             return .requestJSONEncodable(trip)
+        }
     }
         
     var headers: [String : String]? {
@@ -50,12 +61,16 @@ extension TripAPIEndpoints: TargetType {
             "Accept": "application/json"
         ]
         switch self {
-        case .AddTrip(let trip):
-            guard let token = PersistenceStack.loggedInUserToken else {
+        case .AddTrip:
+            guard
+                let token = PersistenceStack.loggedInUserToken,
+                /** uses the logged in user_id to authorize this POST */
+                let userId = PersistenceStack.loggedInUser?.id else {
                 preconditionFailure("User logged in without a stored token in keychains")
             }
             
             defaultHeader["Auth"] = token
+            defaultHeader["user"] = userId
             
             return defaultHeader
         }

@@ -26,6 +26,8 @@
 		E9BA8FE72034E437009CBE24 /* ProfileViewModel+Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BA8FE62034E437009CBE24 /* ProfileViewModel+Moya.swift */; };
 		E9E5E6622039093300628876 /* TripsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E5E6612039093300628876 /* TripsViewModel.swift */; };
 		E9E5E66420390D7700628876 /* TripsViewModel+Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E5E66320390D7700628876 /* TripsViewModel+Moya.swift */; };
+		E9E5E666203A128900628876 /* TPTrip.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E5E665203A128900628876 /* TPTrip.swift */; };
+		E9E5E668203A16AA00628876 /* TripsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E5E667203A16AA00628876 /* TripsTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +68,8 @@
 		E9BA8FE62034E437009CBE24 /* ProfileViewModel+Moya.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileViewModel+Moya.swift"; sourceTree = "<group>"; };
 		E9E5E6612039093300628876 /* TripsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripsViewModel.swift; sourceTree = "<group>"; };
 		E9E5E66320390D7700628876 /* TripsViewModel+Moya.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TripsViewModel+Moya.swift"; sourceTree = "<group>"; };
+		E9E5E665203A128900628876 /* TPTrip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TPTrip.swift; sourceTree = "<group>"; };
+		E9E5E667203A16AA00628876 /* TripsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripsTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +172,7 @@
 			children = (
 				E9E5E6612039093300628876 /* TripsViewModel.swift */,
 				E9E5E66320390D7700628876 /* TripsViewModel+Moya.swift */,
+				E9E5E667203A16AA00628876 /* TripsTableViewController.swift */,
 			);
 			name = Trips;
 			sourceTree = "<group>";
@@ -176,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				E9BA8FE22034CFAF009CBE24 /* TPUser.swift */,
+				E9E5E665203A128900628876 /* TPTrip.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -434,11 +440,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9E5E666203A128900628876 /* TPTrip.swift in Sources */,
 				E91C6ABD2033E9980031F701 /* LoginViewController.swift in Sources */,
 				E91C6A962033E2180031F701 /* AppDelegate.swift in Sources */,
 				E9BA8FDD2034C94C009CBE24 /* App+UIStoryboard.swift in Sources */,
 				E9E5E66420390D7700628876 /* TripsViewModel+Moya.swift in Sources */,
 				E9BA8FE52034D911009CBE24 /* ProfileViewModel.swift in Sources */,
+				E9E5E668203A16AA00628876 /* TripsTableViewController.swift in Sources */,
 				E9BA8FE72034E437009CBE24 /* ProfileViewModel+Moya.swift in Sources */,
 				E91C6AC32033FDB60031F701 /* PersistanceStack.swift in Sources */,
 				E9BA8FE32034CFAF009CBE24 /* TPUser.swift in Sources */,

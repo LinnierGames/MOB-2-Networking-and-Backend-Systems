@@ -28,14 +28,14 @@ class Auth(object):
     def authorize(cls):
         try:
             token = request.headers["Auth"]
-            user_id = request.headers["user"]
+            user_id = ObjectId(request.headers["user"])
         except KeyError:
             response = jsonify(message="auth token cannot be missing")
             response.status_code = 400
 
             return response
 
-        found_object = app.db.users.find_one({"_id": ObjectId(user_id)})
+        found_object = app.db.users.find_one({"_id": user_id})
 
         if found_object is None:
             response = jsonify(message="user not found")
@@ -45,19 +45,19 @@ class Auth(object):
 
         user_for_given_token = app.db.tokens.find_one({"token": token})
         if user_for_given_token is None:
-            response = jsonify(message="Unauthorized")
+            response = jsonify(message="Unauthorized-1")
             response.status_code = 401
 
             return response
-
-        if str(user_for_given_token["user_id"]) != user_id:
-            response = jsonify(message="Unauthorized")
+        
+        if user_for_given_token["user_id"] != user_id:
+            response = jsonify(message="Unauthorized-2")
             response.status_code = 401
 
             return response
 
         cls.token = token
-        cls.user_id = ObjectId(user_id)
+        cls.user_id = user_id
         # TODO: use a timeout to revoke the token
         cls.timeout = datetime.now()
 
