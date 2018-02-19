@@ -8,7 +8,11 @@
 
 import Foundation
 
-struct TPTrip {
+struct TPTrip: Codable {
     var title: String
     let user: TPUser! = nil
+    
+    enum CodingKeys: String, CodingKey {
+        case title
+    }
 }

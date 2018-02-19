@@ -9,15 +9,36 @@
 import Foundation
 import Moya
 
-struct UserHTTPBody: Codable {
+struct JSONUser: Codable {
+    let id: String?
     let username: String?
     let email: String
-    let password: String
+    let password: String?
+    
+    init(id: String? = nil, username: String?, email: String, password: String?) {
+        self.id = id
+        self.username = username
+        self.email = email
+        self.password = password
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "_id"
+        case username
+        case email
+        case password
+    }
+}
+
+extension TPUser {
+    var jsonBody: JSONUser {
+        return JSONUser(id: self.id, username: self.username, email: self.email, password: nil)
+    }
 }
 
 enum LoginAPIEndpoints {
-    case Login(UserHTTPBody)
-    case Register(UserHTTPBody)
+    case Login(JSONUser)
+    case Register(JSONUser)
 }
 
 extension LoginAPIEndpoints: TargetType {

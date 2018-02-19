@@ -38,7 +38,7 @@ struct ProfileViewModel {
                 return
         }
         
-        apiProvider.request(.UpdatePassword(user, newPassword)) { (result) in
+        apiProvider.request(.UpdatePassword(user.jsonBody, newPassword)) { (result) in
             switch result {
             case .success(let res):
                 switch res.statusCode {

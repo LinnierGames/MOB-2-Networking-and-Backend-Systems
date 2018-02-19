@@ -66,6 +66,14 @@ class TripsTableViewController: UITableViewController {
     
     // MARK: - LIFE CYCLE
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        viewModel.reloadTrips { (result) in
+            self.tableView.reloadData()
+        }
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         

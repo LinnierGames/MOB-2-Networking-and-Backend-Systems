@@ -10,7 +10,7 @@ import Foundation
 import Moya
 
 enum ProfileAPIEndpoints {
-    case UpdatePassword(TPUser, String)
+    case UpdatePassword(JSONUser, String)
 }
 
 extension ProfileAPIEndpoints: TargetType {
@@ -21,7 +21,11 @@ extension ProfileAPIEndpoints: TargetType {
     var path: String {
         switch self {
         case .UpdatePassword(let user, _):
-            return "/user/\(user.id)"
+            if let userId = user.id {
+                return "/user/\(userId)"
+            } else {
+                preconditionFailure("TPUser does not have an id")
+            }
         }
     }
 

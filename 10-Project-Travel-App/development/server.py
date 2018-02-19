@@ -49,7 +49,7 @@ class Auth(object):
             response.status_code = 401
 
             return response
-        
+
         if user_for_given_token["user_id"] != user_id:
             response = jsonify(message="Unauthorized-2")
             response.status_code = 401
@@ -159,7 +159,6 @@ class User(Resource):
         return response
 
     def delete(self, user_id):
-        # TODO: DRY autho
         auth = Auth.authorize()
 
         if auth is not None:
@@ -179,7 +178,6 @@ api.add_resource(User, '/user/', '/user/<string:user_id>')
 
 class Trip(Resource):
     def post(self):
-        # TODO: DRY autho
         try:
             title = request.json["title"]
         except KeyError:
@@ -301,7 +299,39 @@ class Trip(Resource):
         return response
 
 
-api.add_resource(Trip, '/trip/', '/trip/<string:trip_id>')
+api.add_resource(Trip, '/trip/', '/trip/<string:trip_id>', endpoint='a_trip')
+
+
+class UserTrip(Resource):
+
+    def get(self, user_id):
+        auth = Auth.authorize()
+
+        if auth is not None:
+            return auth
+
+        user = app.db.users.find_one({"_id": ObjectId(user_id)}, {"password": 0})
+
+        if user is None:
+            response = jsonify(message="resource not found")
+            response.status_code = 404
+
+            return response
+
+        user_trips = app.db.trips.find({"user_id": ObjectId(user_id)})
+
+        trips = list(user_trips)
+        for a_trip in trips:
+            a_trip["_id"] = str(a_trip["_id"])
+            a_trip["user_id"] = str(a_trip["user_id"])
+
+        response = jsonify(message="success", data=trips)
+        response.status_code = 202
+
+        return response
+
+
+api.add_resource(UserTrip, '/user/<string:user_id>/trips', endpoint='user_trips')
 
 # Add api routes here
 
@@ -329,7 +359,6 @@ def login():
 
             del user["password"]
             user_id = str(user["_id"])
-            del user["_id"]
             user["_id"] = user_id
 
             return jsonify(message="Successfully logged in {}".format(username), auth_token=token, data=user), 202, None

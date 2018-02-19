@@ -36,7 +36,7 @@ struct LoginViewModel {
     //TODO: validate for empty fields
     
     func login(unsuccessful: () -> ()) {
-        let user = UserHTTPBody(username: nil, email: email.value!, password: password.value!)
+        let user = JSONUser(username: nil, email: email.value!, password: password.value!)
         apiProvider.request(.Login(user)) { (result) in
             switch result {
             case .success(let res):
@@ -52,7 +52,7 @@ struct LoginViewModel {
                         let userData = try? userDataJson.rawData(options: .prettyPrinted),
                         let user = try? JSONDecoder().decode(TPUser.self, from: userData)
                         else {
-                            return assertionFailure("missing auth_token")
+                            return assertionFailure("missing auth_token fromp api")
                     }
                     
                     PersistenceStack.loggedInUser = user
@@ -75,7 +75,7 @@ struct LoginViewModel {
     }
     
     func register(unsuccessful: () -> ()) {
-        let user = UserHTTPBody(username: username.value, email: email.value!, password: password.value!)
+        let user = JSONUser(username: username.value, email: email.value!, password: password.value!)
         apiProvider.request(.Register(user)) { (result) in
             switch result {
             case .success(let res):

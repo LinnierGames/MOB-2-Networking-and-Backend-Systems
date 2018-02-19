@@ -47,8 +47,43 @@ class TripsViewModel {
         }
     }
     
-    func reload(tripsWith compitionHandler: @escaping (Result<String, TripAPIErrors>) -> ()) {
-        //TODO: fetch all trips
+    func reloadTrips(complition: @escaping (Result<String, TripAPIErrors>) -> ()) {
+        guard
+            let user = PersistenceStack.loggedInUser
+            else {
+                preconditionFailure("not user was logged in")
+        }
+        
+        apiProvider.request(.Trips(for: user.jsonBody)) { (result) in
+            switch result {
+            case .success(let res):
+                guard let message = JSON(res.data).dictionary?["message"]?.string else {
+                    return assertionFailure("failed to get message from json")
+                }
+                
+                switch res.statusCode {
+                case 202:
+                    guard let tripsJson = JSON(res.data).dictionary?["data"],
+                        let tripsData = try? tripsJson.rawData(),
+                        let trips = try? JSONDecoder().decode([TPTrip].self, from: tripsData)
+                        else {
+                            return assertionFailure("could not decode into TPTrips")
+                    }
+                    
+                    self.trips = trips
+                    
+                    complition(.success(message))
+                case 401, 404, 400:
+                    complition(.failure(.Message(message)))
+                case 500:
+                    complition(.failure(.ServerError))
+                default:
+                    fatalError("Unhandled status code")
+                }
+            case .failure(let error):
+                complition(.failure(.Message(error.localizedDescription)))
+            }
+        }
     }
     
     func add(a trip: TPTrip, complition: @escaping (Result<String, TripAPIErrors>) -> ()) {
@@ -76,10 +111,5 @@ class TripsViewModel {
             }
         }
         
-    }
-    
-    
-    
-    func reloadUserTrips(complition: () -> ()) {
     }
 }

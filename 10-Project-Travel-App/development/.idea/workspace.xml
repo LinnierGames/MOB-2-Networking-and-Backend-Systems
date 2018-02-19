@@ -14,10 +14,11 @@
       <file leaf-file-name="server.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="51" column="8" lean-forward="false" selection-start-line="51" selection-start-column="8" selection-end-line="51" selection-end-column="8" />
+            <state relative-caret-position="179">
+              <caret line="183" column="31" lean-forward="false" selection-start-line="183" selection-start-column="23" selection-end-line="183" selection-end-column="31" />
               <folding>
                 <element signature="e#0#56#0" expanded="true" />
+                <element signature="e#3697#4474#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -76,6 +77,7 @@
       <find>'hex'</find>
       <find>find</find>
       <find>auth.user</find>
+      <find>jsonify(</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -199,7 +201,9 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
@@ -239,6 +243,7 @@
           <caret line="211" column="0" lean-forward="true" selection-start-line="211" selection-start-column="0" selection-end-line="211" selection-end-column="0" />
           <folding>
             <element signature="e#0#56#0" expanded="true" />
+            <element signature="e#3697#4474#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -269,6 +274,7 @@
           <caret line="140" column="23" lean-forward="true" selection-start-line="140" selection-start-column="23" selection-end-line="140" selection-end-column="23" />
           <folding>
             <element signature="e#0#56#0" expanded="true" />
+            <element signature="e#3697#4474#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -297,6 +303,7 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#56#0" expanded="true" />
+            <element signature="e#3697#4474#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -345,6 +352,7 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#56#0" expanded="true" />
+            <element signature="e#3697#4474#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -365,6 +373,7 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#56#0" expanded="true" />
+            <element signature="e#3697#4474#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -385,6 +394,7 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#56#0" expanded="true" />
+            <element signature="e#3697#4474#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -405,6 +415,7 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#56#0" expanded="true" />
+            <element signature="e#3697#4474#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -415,6 +426,7 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#56#0" expanded="true" />
+            <element signature="e#3697#4474#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -451,10 +463,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="51" column="8" lean-forward="false" selection-start-line="51" selection-start-column="8" selection-end-line="51" selection-end-column="8" />
+        <state relative-caret-position="179">
+          <caret line="183" column="31" lean-forward="false" selection-start-line="183" selection-start-column="23" selection-end-line="183" selection-end-column="31" />
           <folding>
             <element signature="e#0#56#0" expanded="true" />
+            <element signature="e#3697#4474#0" expanded="false" />
           </folding>
         </state>
       </provider>

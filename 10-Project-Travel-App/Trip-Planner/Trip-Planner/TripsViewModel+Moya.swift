@@ -26,6 +26,7 @@ extension TPTrip {
 
 enum TripAPIEndpoints {
     case AddTrip(JSONTrip)
+    case Trips(for: JSONUser)
 }
 
 extension TripAPIEndpoints: TargetType {
@@ -37,10 +38,22 @@ extension TripAPIEndpoints: TargetType {
         switch self {
         case .AddTrip:
             return "/trip/"
+        case .Trips(let user):
+            if let userId = user.id {
+                return "/user/\(userId)/trips"
+            } else {
+                preconditionFailure("TPUser does not have an id")
+            }
         }
     }
     
     var method: Moya.Method {
+        switch self {
+        case .AddTrip:
+            return .post
+        case .Trips:
+            return .get
+        }
         return .post
     }
     
@@ -52,6 +65,8 @@ extension TripAPIEndpoints: TargetType {
         switch self {
         case .AddTrip(let trip):
             return .requestJSONEncodable(trip)
+        case .Trips:
+            return .requestPlain
         }
     }
         
@@ -61,7 +76,7 @@ extension TripAPIEndpoints: TargetType {
             "Accept": "application/json"
         ]
         switch self {
-        case .AddTrip:
+        case .AddTrip, .Trips:
             guard
                 let token = PersistenceStack.loggedInUserToken,
                 /** uses the logged in user_id to authorize this POST */
