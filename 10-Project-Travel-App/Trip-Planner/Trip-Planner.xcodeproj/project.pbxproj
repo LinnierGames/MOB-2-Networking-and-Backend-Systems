@@ -28,6 +28,7 @@
 		E9E5E66420390D7700628876 /* TripsViewModel+Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E5E66320390D7700628876 /* TripsViewModel+Moya.swift */; };
 		E9E5E666203A128900628876 /* TPTrip.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E5E665203A128900628876 /* TPTrip.swift */; };
 		E9E5E668203A16AA00628876 /* TripsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E5E667203A16AA00628876 /* TripsTableViewController.swift */; };
+		E9E5E66A203BCAC000628876 /* TripDetailedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E5E669203BCAC000628876 /* TripDetailedTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 		E9E5E66320390D7700628876 /* TripsViewModel+Moya.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TripsViewModel+Moya.swift"; sourceTree = "<group>"; };
 		E9E5E665203A128900628876 /* TPTrip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TPTrip.swift; sourceTree = "<group>"; };
 		E9E5E667203A16AA00628876 /* TripsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripsTableViewController.swift; sourceTree = "<group>"; };
+		E9E5E669203BCAC000628876 /* TripDetailedTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailedTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,6 +175,7 @@
 				E9E5E6612039093300628876 /* TripsViewModel.swift */,
 				E9E5E66320390D7700628876 /* TripsViewModel+Moya.swift */,
 				E9E5E667203A16AA00628876 /* TripsTableViewController.swift */,
+				E9E5E66B203BCAC400628876 /* Detailed VC */,
 			);
 			name = Trips;
 			sourceTree = "<group>";
@@ -194,6 +197,14 @@
 				E9BA8FDF2034CABB009CBE24 /* ProfileViewController.swift */,
 			);
 			name = Profile;
+			sourceTree = "<group>";
+		};
+		E9E5E66B203BCAC400628876 /* Detailed VC */ = {
+			isa = PBXGroup;
+			children = (
+				E9E5E669203BCAC000628876 /* TripDetailedTableViewController.swift */,
+			);
+			name = "Detailed VC";
 			sourceTree = "<group>";
 		};
 		EEF21C8843D1D8F564ABC68E /* Pods */ = {
@@ -449,6 +460,7 @@
 				E9E5E668203A16AA00628876 /* TripsTableViewController.swift in Sources */,
 				E9BA8FE72034E437009CBE24 /* ProfileViewModel+Moya.swift in Sources */,
 				E91C6AC32033FDB60031F701 /* PersistanceStack.swift in Sources */,
+				E9E5E66A203BCAC000628876 /* TripDetailedTableViewController.swift in Sources */,
 				E9BA8FE32034CFAF009CBE24 /* TPUser.swift in Sources */,
 				E9E5E6622039093300628876 /* TripsViewModel.swift in Sources */,
 				E9BA8FE02034CABB009CBE24 /* ProfileViewController.swift in Sources */,

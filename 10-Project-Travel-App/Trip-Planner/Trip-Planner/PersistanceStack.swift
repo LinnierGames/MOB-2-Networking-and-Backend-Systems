@@ -13,6 +13,7 @@ import Kingfisher
 struct PersistenceStack {
     
     static func logoutUser() {
+        //TODO: when logged out, clear things like fetched trips
         loggedInUser = nil
         loggedInUserToken = nil
     }

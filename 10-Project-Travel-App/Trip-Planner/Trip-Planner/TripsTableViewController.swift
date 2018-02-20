@@ -18,10 +18,6 @@ class TripsTableViewController: UITableViewController {
 
     // MARK: - RETURN VALUES
     
-    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        return false
-    }
-    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -41,28 +37,19 @@ class TripsTableViewController: UITableViewController {
     
     // MARK: - VOID METHODS
     
-    // MARK: - IBACTIONS
-    
-    @IBOutlet weak var buttonAdd: UIBarButtonItem!
-    @IBAction func pressAddTrip(_ sender: Any) {
-        let alertTrip = UIAlertController(title: "Add a Trip", message: "enter the title of your new trip", preferredStyle: .alert)
-        alertTrip.addTextField()
-        alertTrip.addAction(UIAlertAction(title: "Discard", style: .destructive))
-        alertTrip.addAction(UIAlertAction(title: "Add", style: .default, handler: { [unowned self] (action) in
-            let newTrip = TPTrip(title: alertTrip.textFields?[0].text ?? "Untitled")
-            self.viewModel.add(a: newTrip, complition: { (result) in
-                switch result {
-                case .success:
-                    self.tableView.reloadData()
-                case .failure(let error):
-                    let alertError = UIAlertController(title: "Add a Trip", message: "unexpected error: \(error.localizedDescription)", preferredStyle: .alert)
-                    alertError.addAction(UIAlertAction(title: "Dismiss", style: .default))
-                    self.present(alertError, animated: true)
-                }
-            })
-        }))
-        self.present(alertTrip, animated: true)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let identifier = segue.identifier {
+            switch identifier {
+            case "show editor":
+                break
+            case "show detailed":
+                break
+            default: break
+            }
+        }
     }
+    
+    // MARK: - IBACTIONS
     
     // MARK: - LIFE CYCLE
     
