@@ -125,7 +125,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="6tT-bl-7Vx" kind="show" identifier="show detailed" id="H9o-zm-A65"/>
+                                    <segue destination="j4b-E3-L4u" kind="show" identifier="show detailed" id="V0o-Xj-5lo"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -147,44 +147,46 @@
             <point key="canvasLocation" x="1702" y="-355"/>
         </scene>
         <!--Title-->
-        <scene sceneID="Qfg-DV-TU4">
+        <scene sceneID="eHj-w0-GhN">
             <objects>
-                <tableViewController hidesBottomBarWhenPushed="YES" id="6tT-bl-7Vx" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="A0h-bh-oZN">
+                <viewController hidesBottomBarWhenPushed="YES" id="j4b-E3-L4u" customClass="TripDetailedViewController" customModule="Trip_Planner" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="OaM-Yy-fUk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ttF-rJ-FnG">
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="VY0-sS-Ivx"/>
+                                    <barButtonItem title="Upload an Image" id="CEp-5u-qzl"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="7Uj-wL-BVp"/>
+                                </items>
+                            </toolbar>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="zq6-5v-1uA">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zq6-5v-1uA" id="YUn-E4-LgP">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="6tT-bl-7Vx" id="XUO-r8-SnN"/>
-                            <outlet property="delegate" destination="6tT-bl-7Vx" id="8bK-NC-6TY"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Title" id="s1K-uA-8n6">
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="ugB-si-WF4">
+                        <constraints>
+                            <constraint firstItem="ttF-rJ-FnG" firstAttribute="bottom" secondItem="ebs-2Z-DZU" secondAttribute="bottom" id="GSG-mH-UxC"/>
+                            <constraint firstItem="ttF-rJ-FnG" firstAttribute="leading" secondItem="ebs-2Z-DZU" secondAttribute="leading" id="hQB-Aa-N45"/>
+                            <constraint firstItem="ttF-rJ-FnG" firstAttribute="trailing" secondItem="ebs-2Z-DZU" secondAttribute="trailing" id="lEJ-ah-NIc"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="ebs-2Z-DZU"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Title" id="glW-XM-eYL">
+                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="hba-sq-Gpi">
                             <connections>
-                                <segue destination="f5n-9r-nDv" kind="showDetail" identifier="show editor" action="showViewController:sender:" id="3OD-JO-0p0"/>
+                                <segue destination="f5n-9r-nDv" kind="showDetail" identifier="show editor" id="qjW-Ci-soQ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="aKF-0t-PHx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RQR-uc-znp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2513" y="43"/>
+            <point key="canvasLocation" x="2502" y="0.0"/>
         </scene>
         <!--Edit-->
         <scene sceneID="htY-x5-c3D">
             <objects>
-                <tableViewController hidesBottomBarWhenPushed="YES" id="fNd-nt-YLw" customClass="TripDetailedTableViewController" customModule="Trip_Planner" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController hidesBottomBarWhenPushed="YES" id="fNd-nt-YLw" customClass="TripEditorTableViewController" customModule="Trip_Planner" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="4nP-FX-HKn">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -475,6 +477,6 @@
         <image name="second" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="3OD-JO-0p0"/>
+        <segue reference="qjW-Ci-soQ"/>
     </inferredMetricsTieBreakers>
 </document>

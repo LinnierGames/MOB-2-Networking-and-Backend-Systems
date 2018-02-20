@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TripDetailedTableViewController: UITableViewController {
+class TripEditorTableViewController: UITableViewController {
     
     var trip: TPTrip?
     

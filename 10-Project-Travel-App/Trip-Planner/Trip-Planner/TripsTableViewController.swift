@@ -40,10 +40,14 @@ class TripsTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let identifier = segue.identifier {
             switch identifier {
-            case "show editor":
-                break
+//            case "show editor":
+//                break
             case "show detailed":
-                break
+                let vc = segue.destination as! TripDetailedViewController
+                if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
+                    let trip = viewModel.arrayOfTrips()[indexPath.row]
+                    vc.trip = trip
+                }
             default: break
             }
         }
