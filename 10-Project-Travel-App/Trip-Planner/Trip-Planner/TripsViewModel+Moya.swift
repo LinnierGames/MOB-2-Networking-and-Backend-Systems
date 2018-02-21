@@ -54,7 +54,6 @@ extension TripAPIEndpoints: TargetType {
         case .Trips:
             return .get
         }
-        return .post
     }
     
     var sampleData: Data {
