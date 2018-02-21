@@ -10,6 +10,7 @@ import UIKit
 
 class TripDetailedViewController: UIViewController {
     
+    //TODO: listen for any changes
     var trip: TPTrip!
     
     // MARK: - RETURN VALUES

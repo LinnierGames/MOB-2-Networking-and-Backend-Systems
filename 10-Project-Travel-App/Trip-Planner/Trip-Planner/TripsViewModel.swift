@@ -110,6 +110,29 @@ class TripsViewModel {
                 complition(.failure(.Message(error.localizedDescription)))
             }
         }
-        
+    }
+
+    func update(a trip: TPTrip, complition: @escaping (Result<String, TripAPIErrors>) -> ()) {
+        apiProvider.request(.Update(trip: trip.jsonBody)) { (result) in
+            switch result {
+            case .success(let res):
+                guard let message = JSON(res.data).dictionary?["message"]?.string else {
+                    return assertionFailure("failed to get message from json")
+                }
+                
+                switch res.statusCode {
+                case 202:
+                    complition(.success(message))
+                case 401, 404, 400:
+                    complition(.failure(.Message(message)))
+                case 500:
+                    complition(.failure(.ServerError))
+                default:
+                    fatalError("Unhandled status code")
+                }
+            case .failure(let error):
+                complition(.failure(.Message(error.localizedDescription)))
+            }
+        }
     }
 }

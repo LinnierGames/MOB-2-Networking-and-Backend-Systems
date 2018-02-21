@@ -9,10 +9,17 @@
 import Foundation
 
 struct TPTrip: Codable {
+    let id: String?
     var title: String
     let user: TPUser! = nil
     
+    init(id: String? = nil, title: String) {
+        self.id = id
+        self.title = title
+    }
+    
     enum CodingKeys: String, CodingKey {
+        case id = "_id"
         case title
     }
 }

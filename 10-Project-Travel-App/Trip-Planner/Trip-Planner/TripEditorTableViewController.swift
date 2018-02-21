@@ -32,13 +32,25 @@ class TripEditorTableViewController: UITableViewController {
     
     @IBOutlet weak var buttonSave: UIBarButtonItem!
     @IBAction func pressSave(_ sender: Any) {
-        if trip == nil {
-            guard
-                let newTitle = textfieldTitle.text
-                else {
-                    preconditionFailure("no user logged in")
-            }
-            
+        guard
+            let newTitle = textfieldTitle.text
+            else {
+                preconditionFailure("no user logged in")
+        }
+        
+        if var trip = trip {
+            trip.title = newTitle
+            viewModel.update(a: trip, complition: { (result) in
+                switch result {
+                case .success:
+                    self.presentingViewController!.dismiss(animated: true)
+                case .failure(let error):
+                    let alert = UIAlertController(title: "Updating a Trip", message: "failed: \(error.localizedDescription)", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Dismiss", style: .default))
+                    self.present(alert, animated: true)
+                }
+            })
+        } else {
             let newTrip = TPTrip(title: newTitle)
             viewModel.add(a: newTrip, complition: { (result) in
                 switch result {
@@ -50,8 +62,6 @@ class TripEditorTableViewController: UITableViewController {
                     self.present(alert, animated: true)
                 }
             })
-        } else {
-            
         }
     }
     

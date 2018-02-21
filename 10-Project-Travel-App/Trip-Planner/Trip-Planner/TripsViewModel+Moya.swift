@@ -10,22 +10,30 @@ import Foundation
 import Moya
 
 struct JSONTrip: Codable {
+    let id: String?
     let title: String
     let user: TPUser! = nil
     
-    enum CodingKeyse: String, CodingKey {
+    init(id: String? = nil, title: String) {
+        self.id = id
+        self.title = title
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "_id"
         case title
     }
 }
 
 extension TPTrip {
     var jsonBody: JSONTrip {
-        return JSONTrip(title: self.title)
+        return JSONTrip(id: self.id, title: self.title)
     }
 }
 
 enum TripAPIEndpoints {
     case AddTrip(JSONTrip)
+    case Update(trip: JSONTrip)
     case Trips(for: JSONUser)
 }
 
@@ -38,6 +46,12 @@ extension TripAPIEndpoints: TargetType {
         switch self {
         case .AddTrip:
             return "/trip/"
+        case .Update(let trip):
+            if let tripId = trip.id {
+                return "/trip/\(tripId)"
+            } else {
+                preconditionFailure("TPTrip does not have an id")
+            }
         case .Trips(let user):
             if let userId = user.id {
                 return "/user/\(userId)/trips"
@@ -51,6 +65,8 @@ extension TripAPIEndpoints: TargetType {
         switch self {
         case .AddTrip:
             return .post
+        case .Update:
+            return .patch
         case .Trips:
             return .get
         }
@@ -64,6 +80,8 @@ extension TripAPIEndpoints: TargetType {
         switch self {
         case .AddTrip(let trip):
             return .requestJSONEncodable(trip)
+        case .Update(let trip):
+            return .requestJSONEncodable(trip)
         case .Trips:
             return .requestPlain
         }
@@ -75,7 +93,7 @@ extension TripAPIEndpoints: TargetType {
             "Accept": "application/json"
         ]
         switch self {
-        case .AddTrip, .Trips:
+        case .AddTrip, .Trips, .Update:
             guard
                 let token = PersistenceStack.loggedInUserToken,
                 /** uses the logged in user_id to authorize this POST */
