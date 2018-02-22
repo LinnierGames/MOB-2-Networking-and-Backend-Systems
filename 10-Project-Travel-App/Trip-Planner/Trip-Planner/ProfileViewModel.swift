@@ -20,6 +20,10 @@ struct ProfileViewModel {
     var email = Variable(PersistenceStack.loggedInUser?.email ?? "Oops")
     var password = Variable<String?>(nil)
     
+    /**
+     Logout the user by setting the user token and encoded user, in UserDefaults,
+     to nil
+     */
     func logout() {
         PersistenceStack.logoutUser()
     }
@@ -30,6 +34,9 @@ struct ProfileViewModel {
         case ServerError
     }
     
+    /**
+     update the user's passowrd, only
+     */
     func updatePassword(complition: @escaping (_ Success: Result<String, ProfileAPIErrors>) -> ()) {
         guard
             let newPassword = password.value,
