@@ -21,9 +21,9 @@ struct LoginViewModel {
     
     var delegate: LoginViewModelDelegate
     
-    let apiProvider = MoyaProvider<LoginAPIEndpoints>()
+    private let apiProvider = MoyaProvider<LoginAPIEndpoints>()
     
-    var bag = DisposeBag()
+    private var bag = DisposeBag()
     
     var username = Variable<String?>(nil)
     var email = Variable<String?>(nil)
@@ -35,6 +35,9 @@ struct LoginViewModel {
     
     //TODO: validate for empty fields
     
+    /**
+     Login a user and save token into Keychains
+     */
     func login(unsuccessful: () -> ()) {
         let user = JSONUser(username: nil, email: email.value!, password: password.value!)
         apiProvider.request(.Login(user)) { (result) in
@@ -74,6 +77,9 @@ struct LoginViewModel {
         }
     }
     
+    /**
+     Register a user
+     */
     func register(unsuccessful: () -> ()) {
         let user = JSONUser(username: username.value, email: email.value!, password: password.value!)
         apiProvider.request(.Register(user)) { (result) in
