@@ -47,6 +47,11 @@ class TripsViewModel {
         }
     }
     
+    /**
+     Fetch all of the trips
+     
+     - warning: a user must be already authenticated and logged in
+     */
     func reloadTrips(complition: @escaping (Result<String, TripAPIErrors>) -> ()) {
         guard
             let user = PersistenceStack.loggedInUser
@@ -86,6 +91,11 @@ class TripsViewModel {
         }
     }
     
+    /**
+     Insert a new trip to the logged in user
+     
+     - parameter trip: what trip to add
+     */
     func add(a trip: TPTrip, complition: @escaping (Result<String, TripAPIErrors>) -> ()) {
         apiProvider.request(.AddTrip(trip.jsonBody)) { (result) in
             switch result {
@@ -111,7 +121,12 @@ class TripsViewModel {
             }
         }
     }
-
+    
+    /**
+     Patch a trip
+     
+     - parameter trip: trip to update
+     */
     func update(a trip: TPTrip, complition: @escaping (Result<String, TripAPIErrors>) -> ()) {
         apiProvider.request(.Update(trip: trip.jsonBody)) { (result) in
             switch result {
