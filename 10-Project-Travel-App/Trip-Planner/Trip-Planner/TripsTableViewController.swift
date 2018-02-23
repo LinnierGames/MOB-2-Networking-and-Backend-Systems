@@ -53,6 +53,33 @@ class TripsTableViewController: UITableViewController {
         }
     }
     
+    // MARK: Table View Delegate
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        switch editingStyle {
+        case .delete:
+            let trip = viewModel.arrayOfTrips()[indexPath.row]
+            viewModel.delete(a: trip, complition: { (result) in
+                switch result {
+                case .success:
+                    self.viewModel.removeTrip(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .automatic)
+                case .failure(let err):
+                    UIAlertController(
+                        title: "Deleting a Trip",
+                        message: "error: \(err.localizedDescription)",
+                        preferredStyle: .alert)
+                        
+                        .addDismissableButton(title: "Dismiss")
+                        .present(in: self)
+                    
+                    self.tableView.reloadData()
+                }
+            })
+        default: break
+        }
+    }
+    
     // MARK: - IBACTIONS
     
     // MARK: - LIFE CYCLE

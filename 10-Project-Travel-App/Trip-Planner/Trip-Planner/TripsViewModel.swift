@@ -24,6 +24,10 @@ class TripsViewModel {
         })
     }
     
+    func removeTrip(at index: Int) {
+        self.trips.remove(at: index)
+    }
+    
 //    private let privateDataSource: Variable<[String]> = Variable([])
 //    private let disposeBag = DisposeBag()
 //
@@ -128,7 +132,35 @@ class TripsViewModel {
      - parameter trip: trip to update
      */
     func update(a trip: TPTrip, complition: @escaping (Result<String, TripAPIErrors>) -> ()) {
-        apiProvider.request(.Update(trip: trip.jsonBody)) { (result) in
+        apiProvider.request(.Update(trip.jsonBody)) { (result) in
+            switch result {
+            case .success(let res):
+                guard let message = JSON(res.data).dictionary?["message"]?.string else {
+                    return assertionFailure("failed to get message from json")
+                }
+                
+                switch res.statusCode {
+                case 202:
+                    complition(.success(message))
+                case 401, 404, 400:
+                    complition(.failure(.Message(message)))
+                case 500:
+                    complition(.failure(.ServerError))
+                default:
+                    fatalError("Unhandled status code")
+                }
+            case .failure(let error):
+                complition(.failure(.Message(error.localizedDescription)))
+            }
+        }
+    }
+    /**
+     Delete a trip
+     
+     - parameter trip: trip to update
+     */
+    func delete(a trip: TPTrip, complition: @escaping (Result<String, TripAPIErrors>) -> ()) {
+        apiProvider.request(.Delete(trip.jsonBody)) { (result) in
             switch result {
             case .success(let res):
                 guard let message = JSON(res.data).dictionary?["message"]?.string else {

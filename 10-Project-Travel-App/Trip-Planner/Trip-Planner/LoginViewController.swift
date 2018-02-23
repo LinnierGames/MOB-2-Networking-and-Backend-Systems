@@ -21,6 +21,8 @@ class LoginViewController: UIViewController, LoginViewModelDelegate, UITextField
     
     lazy var loginViewModel = LoginViewModel(delegate: self)
     
+    private var bag = DisposeBag()
+    
     // MARK: - RETURN VALUES
     
     // MARK: - VOID METHODS
@@ -117,9 +119,9 @@ class LoginViewController: UIViewController, LoginViewModelDelegate, UITextField
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        textfieldUsername.rx.text.bind(to: loginViewModel.username).disposed(by: loginViewModel.bag)
-        textfieldEmail.rx.text.bind(to: loginViewModel.email).disposed(by: loginViewModel.bag)
-        textfieldPassword.rx.text.bind(to: loginViewModel.password).disposed(by: loginViewModel.bag)
+        textfieldUsername.rx.text.bind(to: loginViewModel.username).disposed(by: bag)
+        textfieldEmail.rx.text.bind(to: loginViewModel.email).disposed(by: bag)
+        textfieldPassword.rx.text.bind(to: loginViewModel.password).disposed(by: bag)
         
 //        if buttonLogin != nil {
 ////            buttonLogin!.rx.tap.asDriver().drive(onNext: loginViewModel.login).disposed(by: loginViewModel.bag)

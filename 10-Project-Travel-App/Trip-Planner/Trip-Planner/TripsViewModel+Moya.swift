@@ -33,7 +33,9 @@ extension TPTrip {
 
 enum TripAPIEndpoints {
     case AddTrip(JSONTrip)
-    case Update(trip: JSONTrip)
+    case Update(JSONTrip)
+    case Delete(JSONTrip)
+    
     case Trips(for: JSONUser)
 }
 
@@ -47,6 +49,12 @@ extension TripAPIEndpoints: TargetType {
         case .AddTrip:
             return "/trip/"
         case .Update(let trip):
+            if let tripId = trip.id {
+                return "/trip/\(tripId)"
+            } else {
+                preconditionFailure("TPTrip does not have an id")
+            }
+        case .Delete(let trip):
             if let tripId = trip.id {
                 return "/trip/\(tripId)"
             } else {
@@ -67,6 +75,8 @@ extension TripAPIEndpoints: TargetType {
             return .post
         case .Update:
             return .patch
+        case .Delete:
+            return .delete
         case .Trips:
             return .get
         }
@@ -82,7 +92,7 @@ extension TripAPIEndpoints: TargetType {
             return .requestJSONEncodable(trip)
         case .Update(let trip):
             return .requestJSONEncodable(trip)
-        case .Trips:
+        case .Delete, .Trips:
             return .requestPlain
         }
     }
@@ -93,7 +103,7 @@ extension TripAPIEndpoints: TargetType {
             "Accept": "application/json"
         ]
         switch self {
-        case .AddTrip, .Trips, .Update:
+        case .AddTrip, .Update, .Delete, .Trips:
             guard
                 let token = PersistenceStack.loggedInUserToken,
                 /** uses the logged in user_id to authorize this POST */
