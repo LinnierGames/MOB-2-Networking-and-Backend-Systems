@@ -186,6 +186,8 @@ class User(Resource):
         app.db.users.delete_one({"_id": ObjectId(user_id)})
         app.db.tokens.delete_many({"user_id": ObjectId(user_id)})
 
+        app.db.trips.delete_many({"user_id": ObjectId(user_id)})
+
         response = jsonify(message="delete successful")
         response.status_code = 202
 
