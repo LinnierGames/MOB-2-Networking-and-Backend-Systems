@@ -22,7 +22,12 @@ app.config['SECRET_KEY'] = 'hot-tomalles'
 def auth_protected(f):
     @wraps(f)
     def auth(*args, **kwargs):
-        pass
+        auth = Auth.authorize()
+
+        if auth is not None:
+            return auth
+        else:
+            return f(*args, **kwargs)
 
     return auth
 
@@ -112,11 +117,8 @@ class User(Resource):
 
         return response
 
+    @auth_protected
     def put(self, user_id):
-        auth = Auth.authorize()
-
-        if auth is not None:
-            return auth
 
         collection = app.db.users
         is_found = collection.find_one({"_id": ObjectId(user_id)})
@@ -137,7 +139,7 @@ class User(Resource):
 
             return response
 
-        collection.update_one({"_id": ObjectId()}, {
+        collection.update_one({"_id": ObjectId(user_id)}, {
             "$set": {
                 "password": new_password,
                 "username": new_username,
@@ -150,14 +152,8 @@ class User(Resource):
 
         return response
 
+    @auth_protected
     def patch(self, user_id):
-        auth = Auth.authorize()
-
-        if auth is not None:
-            return auth
-
-        # preconditions: _auth checks if user exists
-
         found_object = app.db.users.find_one({"_id": ObjectId(user_id)})
 
         new_password = request.json.get("password", found_object["password"])
@@ -177,12 +173,8 @@ class User(Resource):
 
         return response
 
+    @auth_protected
     def delete(self, user_id):
-        auth = Auth.authorize()
-
-        if auth is not None:
-            return auth
-
         app.db.users.delete_one({"_id": ObjectId(user_id)})
         app.db.tokens.delete_many({"user_id": ObjectId(user_id)})
 
@@ -198,11 +190,9 @@ api.add_resource(User, '/user/', '/user/<string:user_id>')
 
 
 class Trip(Resource):
-    def post(self):
-        auth = Auth.authorize()
 
-        if auth is not None:
-            return auth
+    @auth_protected
+    def post(self):
 
         try:
             title = request.json["title"]
@@ -228,12 +218,8 @@ class Trip(Resource):
 
         return response
 
+    @auth_protected
     def get(self, trip_id):
-        auth = Auth.authorize()
-
-        if auth is not None:
-            return auth
-
         found_trip = app.db.trips.find_one({"_id": ObjectId(trip_id)}, {"_id": 0})
 
         if found_trip is None:
@@ -253,14 +239,8 @@ class Trip(Resource):
 
         return response
 
+    @auth_protected
     def patch(self, trip_id):
-        auth = Auth.authorize()
-
-        if auth is not None:
-            return auth
-
-        # preconditions: _auth checks if user exists
-
         # TODO: Dry
         found_trip = app.db.trips.find_one({"_id": ObjectId(trip_id)})
 
@@ -291,13 +271,9 @@ class Trip(Resource):
 
         return response
 
+    @auth_protected
     def delete(self, trip_id):
-        auth = Auth.authorize()
-
-        if auth is not None:
-            return auth
-
-        # TODO: Dry
+        # TODO: Dry user to trip auth
         found_trip = app.db.trips.find_one({"_id": ObjectId(trip_id)})
 
         if found_trip is None:
@@ -325,12 +301,8 @@ api.add_resource(Trip, '/trip/', '/trip/<string:trip_id>', endpoint='a_trip')
 
 class UserTrip(Resource):
 
+    @auth_protected
     def get(self, user_id):
-        auth = Auth.authorize()
-
-        if auth is not None:
-            return auth
-
         user = app.db.users.find_one({"_id": ObjectId(user_id)}, {"password": 0})
 
         if user is None:
