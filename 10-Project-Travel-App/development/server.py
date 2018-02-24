@@ -4,6 +4,8 @@ from pymongo import MongoClient
 from utils.mongo_json_encoder import JSONEncoder
 from bson.objectid import ObjectId
 from datetime import datetime
+from functools import wraps
+import jwt
 import bcrypt
 import pdb
 
@@ -13,8 +15,17 @@ app.db = mongo.trip_planner_development
 app.bcrypt_rounds = 12
 api = Api(app)
 
+app.config['SECRET_KEY'] = 'hot-tomalles'
 
 ## Write Resources here
+
+def auth_protected(f):
+    @wraps(f)
+    def auth(*args, **kwargs):
+        pass
+
+    return auth
+
 
 # can return: 400 missing token
 # can return: 404 user not found form _id
@@ -28,10 +39,18 @@ class Auth(object):
     def authorize(cls):
         try:
             token = request.headers["Auth"]
-            user_id = ObjectId(request.headers["user"])
         except KeyError:
             response = jsonify(message="auth token cannot be missing")
             response.status_code = 400
+
+            return response
+
+        try:
+            token_dict = jwt.decode(token, app.config['SECRET_KEY'])
+            user_id = ObjectId(token_dict["user_id"])
+        except (jwt.DecodeError, jwt.InvalidTokenError) as err:
+            response = jsonify(message="Unauthorized-Oops")
+            response.status_code = 401
 
             return response
 
@@ -178,6 +197,11 @@ api.add_resource(User, '/user/', '/user/<string:user_id>')
 
 class Trip(Resource):
     def post(self):
+        auth = Auth.authorize()
+
+        if auth is not None:
+            return auth
+
         try:
             title = request.json["title"]
         except KeyError:
@@ -185,11 +209,6 @@ class Trip(Resource):
             response.status_code = 400
 
             return response
-
-        auth = Auth.authorize()
-
-        if auth is not None:
-            return auth
 
         new_trip = {
             "user_id": Auth.user_id,
@@ -349,19 +368,20 @@ def login():
     if user is not None:
         if password == user["password"]:
             username = user["username"]
-            # FIXME: use better token generator
-            token = username.encode('hex')
+
+            del user["password"]
+            user_id_str = str(user["_id"])
+
+            token = jwt.encode({'user_id': user_id_str}, app.config['SECRET_KEY'])
+            token_string = token.decode('UTF-8')
             app.db.tokens.insert_one({
-                "token": token,
+                "token": token_string,
                 "username": username,
                 "user_id": user["_id"]
             })
+            user["_id"] = user_id_str
 
-            del user["password"]
-            user_id = str(user["_id"])
-            user["_id"] = user_id
-
-            return jsonify(message="Successfully logged in {}".format(username), auth_token=token, data=user), 202, None
+            return jsonify(message="Successfully logged in {}".format(username), auth_token=token_string, data=user), 202, None
         else:
             return jsonify(message="Wrong email/password"), 401, None
     else:
